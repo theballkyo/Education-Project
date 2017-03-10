@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Hello from '@/components/Hello'
+import Login from '@/components/auth/Login'
 
 describe('Hello.vue', () => {
   it('should render correct contents', () => {
@@ -9,3 +10,10 @@ describe('Hello.vue', () => {
       .to.equal('Welcome to Your Vue.js App')
   })
 })
+
+// describe('Login.vue', () => {
+//   it('should login correct', () => {
+//     const Constructor = Vue.extend(Login)
+//     const vm = new Constructor().$mount()
+//   })
+// })
