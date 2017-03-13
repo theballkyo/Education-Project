@@ -11,20 +11,15 @@ Vue.http.options.crossOrigin = true
 Vue.http.options.credentials = true
 
 Vue.http.interceptors.push((request, next) => {
-  store.dispatch('connection/connecting')
   let token = store.state.user.token || null
   if (token !== null) {
     request.headers.set('Authorization', `Bearer ${token}`)
   }
   next(response => {
-    // console.log(response)
-    if (!response.ok) {
-      store.dispatch('connection/fail', 'Connection Failed.')
-      return
-    }
-    store.dispatch('connection/wait')
+    // if (!response.ok) {
+    //   return
+    // }
     if (response.status === 401) {
-      store.dispatch('logoutRequest')
       router.push('/login')
     }
   })

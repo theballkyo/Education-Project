@@ -1,6 +1,6 @@
 import { course } from '../storageHelper'
 import * as types from '../mutation-types'
-import * as courseAPI from '@/api/course'
+import api from '@/api/'
 
 const state = {
   all: course.all || [],
@@ -23,7 +23,7 @@ const actions = {
     commit(types.LOADING_COURSE)
     commit(types.CLEAR_COURSE)
     try {
-      const course = await courseAPI.getCourses(options)
+      const course = await api.course.getCourses(options)
       // console.log(course)
       commit(types.RECEIVE_COURSE, course.body)
     } catch (e) {
@@ -38,7 +38,7 @@ const actions = {
     commit(types.LOADING_COURSE)
     commit(types.REMOVE_COURSE, id)
     try {
-      const course = await courseAPI.getCourseById(id)
+      const course = await api.course.getCourseById(id)
       commit(types.ADD_COURSE, course.body)
     } catch (e) {
       commit(types.COURSE_LOAD_ERROR)
