@@ -13,7 +13,7 @@ import { CourseResrouce } from './resource'
  * Object  filter => filter course "key" => value
  * @param Object option
  */
-export const getCourses = ({page, filters = {}} = {}) => {
+const getCourses = ({page, filters = {}} = {}) => {
   // Todo.
   return CourseResrouce.get({ page, ...filters })
 }
@@ -22,6 +22,11 @@ export const getCourses = ({page, filters = {}} = {}) => {
  * Get course by ID
  * @param Integer id
  */
-export const getCourseById = id => {
+const getCourseById = id => {
   return CourseResrouce.get({ id })
+}
+
+export default {
+  getCourses,
+  getCourseById
 }

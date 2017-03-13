@@ -1,6 +1,6 @@
 import * as types from '../mutation-types'
 import { user } from '../storageHelper'
-import * as authAPI from '@/api/auth'
+import api from '@/api/'
 import jwtDecode from 'jwt-decode'
 
 const state = {
@@ -21,7 +21,7 @@ const actions = {
   async loginRequest ({ commit, state }, credentials) {
     commit(types.LOGIN_REQUEST)
     try {
-      const rawData = await authAPI.authenticate(credentials)
+      const rawData = await api.auth.authenticate(credentials)
       const body = rawData.body
       if (body.error) {
         commit(types.LOGIN_FAILED, body.error)
