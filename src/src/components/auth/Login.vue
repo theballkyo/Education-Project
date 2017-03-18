@@ -17,8 +17,8 @@ export default {
   name: 'Login',
   data () {
     return {
-      email: 'test@test.com',
-      password: '1234'
+      email: 'faycarey@geekfarm.com',
+      password: 'ntsd'
     }
   },
   created () {

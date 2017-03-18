@@ -1,7 +1,7 @@
 import * as types from '../mutation-types'
 import { user } from '../storageHelper'
 import api from '@/api/'
-import jwtDecode from 'jwt-decode'
+// import jwtDecode from 'jwt-decode'
 
 const state = {
   profile: user.profile || {},
@@ -26,11 +26,13 @@ const actions = {
       if (body.error) {
         commit(types.LOGIN_FAILED, body.error)
       } else {
-        const token = body.token
-        const profile = jwtDecode(token)
+        const token = body.accessToken
+        // const profile = jwtDecode(token)
+        const profile = body.user
         commit(types.LOGIN_USER, {token, profile})
       }
     } catch (e) {
+      console.log(e)
       commit(types.LOGIN_FAILED, `Can't connect to a server. or Token invalid.`)
     }
     commit(types.LOGIN_REQUEST_END)

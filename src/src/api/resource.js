@@ -7,8 +7,8 @@ import router from '@/router/'
 import { API_ROOT } from '@/config'
 Vue.use(VueResource)
 
-Vue.http.options.crossOrigin = true
-Vue.http.options.credentials = true
+// Vue.http.options.crossOrigin = true
+// Vue.http.options.credentials = true
 
 Vue.http.interceptors.push((request, next) => {
   let token = store.state.user.token || null
@@ -25,5 +25,5 @@ Vue.http.interceptors.push((request, next) => {
   })
 })
 
-export const AuthResource = Vue.resource(API_ROOT + 'user/{/id}')
+export const AuthResource = Vue.resource(API_ROOT + 'login')
 export const CourseResrouce = Vue.resource(API_ROOT + 'event{/id}')

@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Course from '@/components/course/Course'
-import CourseDetail from '@/components/CourseDetail'
+import CourseDetail from '@/components/course/CourseDetail'
 import Login from '@/components/auth/Login'
 import Logout from '@/components/auth/Logout'
 import User from '@/components/User'
 import UserHome from '@/components/UserHome'
-import * as guard from './guard'
+// import * as guard from './guard'
 
 Vue.use(Router)
 
@@ -16,7 +16,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
+      name: 'Home',
       component: Home
     },
     {
@@ -32,13 +32,14 @@ export default new Router({
     {
       path: '/course',
       name: 'Course',
-      component: Course,
-      beforeEnter: guard.auth
+      component: Course
+      // beforeEnter: guard.auth
     },
     {
       path: '/course/:id',
       name: 'CourseDetail',
-      component: CourseDetail
+      component: CourseDetail,
+      props: true
     },
     {
       path: '/user/:id',

@@ -1,14 +1,15 @@
-import Vue from 'vue'
-import { API_URL } from './BaseAPI'
+// import Vue from 'vue'
+// import { API_URL } from './BaseAPI'
+import { AuthResource } from './resource'
 
-const AUTH_URL = 'http://localhost:3001/user/login'
+// const AUTH_URL = 'http://localhost:3001/user/login'
 
-const authenticate = (body) => {
-  return Vue.http.post(AUTH_URL, body)
+const authenticate = (credentials) => {
+  return AuthResource.save({...credentials})
 }
 
 const logout = () => {
-  return Vue.http.get(`${API_URL}auth/logout`)
+  // Todo.
 }
 
 const refreshToken = () => {
