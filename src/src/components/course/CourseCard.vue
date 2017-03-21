@@ -9,15 +9,15 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4">ชื่อสถาบันที่สอน</p>
-        <p class="subtitle is-6">วิชาที่ต้องการ</p>
+        <p class="title is-4">{{ course.institute[0].name }}</p>
+        <p class="subtitle is-6">{{ course.subject }}</p>
       </div>
     </div>
 
     <div class="content">
       <div class="has-text-right">
-        <div>0 บาท</div>
-        <div>2 ชั่วโมง / ครั้ง</div>
+        <div>{{ course.price }} บาท</div>
+        <div>{{ course.hour }} ชั่วโมง / ครั้ง</div>
       </div>
       <div class="columns button-menu">
         <div class="column">
@@ -25,7 +25,7 @@
 </a>
         </div>
         <div class="column">
-          <a class="button is-warning is-fullwidth">button</a>
+          <router-link :to="`/course/${course._id}`" class="button is-warning is-fullwidth">คลิกดูรายละเอียด</router-link>
         </div>
       </div>
     </div>
@@ -34,7 +34,19 @@
 </template>
 <script>
 export default {
-  name: 'courseCard'
+  name: 'courseCard',
+  props: {
+    course: {
+      type: Object,
+      default: {
+        _id: '1',
+        institute: [{name: 'Unknown'}],
+        subject: 'Unknown',
+        price: 1000,
+        hour: 2
+      }
+    }
+  }
 }
 </script>
 

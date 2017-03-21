@@ -6,10 +6,12 @@ import user from './modules/user'
 import course from './modules/course'
 import message from './modules/message'
 import connection from './modules/connection'
+import search from './modules/search'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  namespaced: true,
   state,
   mutations,
   plugins,
@@ -17,7 +19,8 @@ export default new Vuex.Store({
     user,
     course,
     message,
-    connection
+    connection,
+    search
   },
   strict: process.env.NODE_ENV !== 'production'
 })

@@ -6,7 +6,7 @@
 export default {
   name: 'app',
   created () {
-    // Todo.
+    document.getElementsByClassName('loading')[0].remove()
   }
 }
 </script>

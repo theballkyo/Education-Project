@@ -4,35 +4,56 @@
     <hr>
     <div class="field">
       <p class="control">
-        <input class="input" type="text" placeholder="ชื่อวิชา">
+        <input class="input" type="text" v-model="subject" placeholder="ชื่อวิชา">
       </p>
     </div>
     <div class="field">
       <p class="control">
-        <input class="input" type="text" placeholder="ระดับชั้น">
+        <input class="input" type="text" v-model="level" placeholder="ระดับชั้น">
       </p>
     </div>
     <div class="field">
       <p class="control">
-        <input class="input" type="text" placeholder="ชื่อสถาบันที่สอน">
+        <input class="input" type="text" v-model="institution" placeholder="ชื่อสถาบันที่สอน">
       </p>
     </div>
     <div class="field columns">
       <div class="control column is-2">
-        <input class="input" type="text" placeholder="< 0 บาท">
+        <input class="input" type="text" v-model="price" placeholder="< 0 บาท">
       </div>
       <div class="control column is-10">
-        <input class="" type="range" min="0" max="10000" value="8000">
+        <input class="" type="range" min="0" v-model="price" max="10000" value="8000">
       </div>
     </div>
     <div class="field">
-        <button class="button is-warning is-fullwidth is-large">ค้นหาเลย</button>
+        <button class="button is-warning is-fullwidth is-large" @click="onSearch">ค้นหาเลย</button>
     </div>
   </div>
 </template>
-<<script>
+<script>
 export default {
-  name: 'search-box'
+  name: 'search-box',
+  data () {
+    return {
+      subject: '',
+      level: '',
+      institution: '',
+      price: 2000
+    }
+  },
+  methods: {
+    onSearch (event) {
+      this.$router.push({
+        path: '/search',
+        query: {
+          subject: this.subject,
+          level: this.level,
+          institution: this.institution,
+          price: this.price
+        }
+      })
+    }
+  }
 }
 </script>
 

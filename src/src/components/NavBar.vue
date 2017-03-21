@@ -1,9 +1,7 @@
 <template>
 <nav class="nav has-shadow">
   <div class="nav-left">
-    <a class="nav-item">
-      <img src="https://dummyimage.com/640x160/252525/fff" alt="Bulma logo">
-    </a>
+    <a @click="logoClick" class="nav-item" href="#"><img src="https://dummyimage.com/640x160/252525/fff" alt="Bulma logo"></a>
   </div>
 
   <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
@@ -41,7 +39,22 @@
 
 <script>
 export default {
-  name: 'navbar'
+  name: 'navbar',
+  methods: {
+    logoClick () {
+      console.log(this.$route.path)
+      if (this.$route.path === '/') {
+        this.$router.go({
+          path: '/',
+          query: {
+            t: new Date()
+          }
+        })
+      } else {
+        this.$router.push('/')
+      }
+    }
+  }
 }
 </script>
 

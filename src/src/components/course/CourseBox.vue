@@ -10,9 +10,10 @@
     </ul>
   </div>
   <div class="course--list">
+    <Loading v-if="isLoading"></Loading>
     <div class="columns is-multiline">
-      <div v-for="n in 10" class="column is-one-quarter">
-        <CourseCard></CourseCard>
+      <div v-for="course in courses" class="column is-one-quarter">
+        <CourseCard :course="course"></CourseCard>
       </div>
     </div>
   </div>
@@ -21,16 +22,27 @@
 
 <script>
 import CourseCard from './CourseCard.vue'
+import Loading from '../Loading.vue'
+
 export default {
   name: 'course-box',
   props: {
     title: {
       type: String,
       default: 'คอร์สเรียนมาใหม่'
+    },
+    courses: {
+      type: Array,
+      default: null
+    },
+    isLoading: {
+      type: Boolean,
+      default: true
     }
   },
   components: {
-    CourseCard
+    CourseCard,
+    Loading
   }
 }
 </script>
@@ -57,10 +69,13 @@ export default {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 5.25rem;
+  height: 3.25rem;
   padding: 0 2.5rem 0 0!important;
   &.tabs {
     margin-bottom: 0;
+  }
+  li {
+    border-left: 2px solid #FFCF00;
   }
 }
 .tabs {

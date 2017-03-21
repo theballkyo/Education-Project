@@ -7,11 +7,12 @@ import Login from '@/components/auth/Login'
 import Logout from '@/components/auth/Logout'
 import User from '@/components/User'
 import UserHome from '@/components/UserHome'
+import SearchResult from '@/components/SearchResult'
 // import * as guard from './guard'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -36,6 +37,11 @@ export default new Router({
       // beforeEnter: guard.auth
     },
     {
+      path: '/search',
+      name: 'SearchResult',
+      component: SearchResult
+    },
+    {
       path: '/course/:id',
       name: 'CourseDetail',
       component: CourseDetail,
@@ -58,3 +64,11 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0)
+  next()
+  // transition.next()
+})
+
+export default router
