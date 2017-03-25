@@ -1,6 +1,6 @@
 <template>
 <div class="course-card card">
-  <div class="card--subject">ระดับชั้น ป.1</div>
+  <div class="card--subject">ระดับชั้น {{ course.level }}</div>
   <div class="card-content">
     <div class="media">
       <div class="media-left">
@@ -9,15 +9,15 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4">{{ course.institute[0].name }}</p>
-        <p class="subtitle is-6">{{ course.subject }}</p>
+        <p class="title is-4">{{ course.institute.name }}</p>
+        <p class="subtitle is-6">{{ course.name }}</p>
       </div>
     </div>
 
     <div class="content">
       <div class="has-text-right">
         <div>{{ course.price }} บาท</div>
-        <div>{{ course.hour }} ชั่วโมง / ครั้ง</div>
+        <div>{{ course.hourPerDay }} ชั่วโมง / ครั้ง</div>
       </div>
       <div class="columns button-menu">
         <div class="column">

@@ -1,7 +1,8 @@
 <template>
   <div class="course-detail main-block">
     <NavBar></NavBar>
-    <div class="columns container is-fluid">
+    <Loading v-if="isLoading"></Loading>
+    <div v-else class="columns container is-fluid">
       <div class="column is-two-thirds">
         <div class="columns">
           <div class="column">
@@ -42,32 +43,18 @@
       </div>
       <div class="column">
         <div class="course-info content">
-          <h2>ชื่อคอร์สเรียน</h2>
-          <h1>ID {{ this.$route.params.id }}</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.</p>
-          <h2>Second level</h2>
-          <p>Curabitur accumsan turpis pharetra <strong>augue tincidunt</strong> blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
-          <ul>
-            <li>In fermentum leo eu lectus mollis, quis dictum mi aliquet.</li>
-            <li>Morbi eu nulla lobortis, lobortis est in, fringilla felis.</li>
-            <li>Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.</li>
-            <li>Ut non enim metus.</li>
-          </ul>
-          <h3>Third level</h3>
-          <p>Quisque ante lacus, malesuada ac auctor vitae, congue <a href="#">non ante</a>. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
-        </div>
-        <div class="course-more content">
-          <h1 class="title">คอร์สเรียนที่คล้ายกัน</h1>
-          <div v-for="n in 4" class="course-more--box">
-            <p>ชื่อคอร์สเรียน</p>
-            <p>ชื่อสถาบัน</p>
-            <div class="columns">
-              <div class="column">ชื่อวิชา</div>
-              <div class="column">ระดับชั้น</div>
-            </div>
-            <p>ราคา/จำนวนชัวโมง</p>
-            <hr>
-          </div>
+          <h1>{{ course.name }}</h1>
+          <h2>{{ course.institute }}</h2>
+          <p>{{ course.subject }} || {{ course.level }}</p>
+          <p>ราคา {{ course.price }} บาท / {{ course.hourPerDay * course.studyTimes}} ชั่วโมง</p>
+          <hr>
+          <h2>รายละเอียด</h2>
+          <p>{{ course.description }}</p>
+          <p>รอบเรียน</p>
+          <p>สถานที่</p>
+          <p>โปรโมชั่น</p>
+          <p>เบอร์โทร</p>
+          <p>เว็บไซต์</p>
         </div>
       </div>
     </div>
@@ -76,34 +63,37 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+// import { mapActions, mapGetters } from 'vuex'
 import NavBar from '../NavBar.vue'
+import api from '@/api/'
 import FooterBox from '../FooterBox.vue'
+import Loading from '../Loading.vue'
 
 export default {
   name: 'courseDetail',
+  data () {
+    return {
+      course: {},
+      errors: {},
+      isLoading: true
+    }
+  },
   props: [
     'id'
   ],
-  mounted () {
-    // this.requestCourseById(parseInt(this.$route.params.id))
-  },
-  methods: {
-    ...mapActions('course', [
-      'requestCourseById'
-    ])
-  },
-  computed: {
-    ...mapGetters('course', [
-      'getCourseById'
-    ]),
-    course () {
-      return this.getCourseById(parseInt(this.$route.params.id))
+  async mounted () {
+    try {
+      const course_ = await api.course.getCourseById(this.$route.params.id)
+      this.course = course_.body
+    } catch (e) {
+      this.errors = e
     }
+    this.isLoading = false
   },
   components: {
     NavBar,
-    FooterBox
+    FooterBox,
+    Loading
   }
 }
 </script>

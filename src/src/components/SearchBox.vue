@@ -14,7 +14,7 @@
     </div>
     <div class="field">
       <p class="control">
-        <input class="input" type="text" v-model="institution" placeholder="ชื่อสถาบันที่สอน">
+        <input class="input" type="text" v-model="institute" placeholder="ชื่อสถาบันที่สอน">
       </p>
     </div>
     <div class="field columns">
@@ -37,7 +37,7 @@ export default {
     return {
       subject: '',
       level: '',
-      institution: '',
+      institute: '',
       price: 2000
     }
   },
@@ -48,7 +48,7 @@ export default {
         query: {
           subject: this.subject,
           level: this.level,
-          institution: this.institution,
+          institute: this.institute,
           price: this.price
         }
       })

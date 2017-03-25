@@ -67,9 +67,7 @@ export default {
     }
   },
   mounted () {
-    window.setTimeout(() => {
-      this.fetchCourse()
-    }, 2000)
+    this.fetchCourse()
   },
   components: {
     NavBar,

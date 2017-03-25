@@ -12,7 +12,11 @@
   <div class="main-block">
     <Loading v-if="isLoading"></Loading>
     <div v-else class="columns is-multiline container is-fluid">
-      <div class="column is-12"><h3 class="title is-3">พบคอร์สเรียน {{ courses.length }} รายการ จากคำค้นหา {{ filters.subject }} {{ filters.level }} {{ filters.institution }} ราคาไม่เกิน {{ filters.price }} บาท</h3>
+      <div class="column is-12"><h3 class="title is-3">พบคอร์สเรียน {{ courses.length }} รายการ จากคำค้นหา 
+      {{ filters.subject ? `ชื่อคอร์ส ${filters.subject}` : '' }}
+      {{ filters.level ? `ระดับชั้น ${filters.level}` : '' }}
+      {{ filters.institute ? `สถาบัน ${filters.institute}` : '' }} 
+      ราคาไม่เกิน {{ filters.price }} บาท</h3>
       *รอ Backend</div>
       <div v-for="course in courses" class="column is-one-quarter">
         <CourseCard :course="course"></CourseCard>
@@ -50,9 +54,7 @@ export default {
   },
   mounted () {
     this.filters = this.$route.query
-    window.setTimeout(() => {
-      this.fetchCourse()
-    }, 2000)
+    this.fetchCourse()
   },
   components: {
     NavBar,
