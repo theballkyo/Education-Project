@@ -7,14 +7,14 @@
         <div class="columns">
           <div class="column">
             <figure class="image">
-              <img src="https://dummyimage.com/1024x768/252525/fff">
+              <img :src="showImg">
             </figure>
           </div>
         </div>
         <div class="columns is-gapless">
           <div v-for="c in 4" class="column course-image is-hidden-mobile">
             <figure class="image">
-              <img src="https://dummyimage.com/1024x768/252525/fff">
+              <img @click="slider(c)" :src="`https://dummyimage.com/1024x768/252525/fff&text=${c}`">
             </figure>
           </div>
         </div>
@@ -43,18 +43,54 @@
       </div>
       <div class="column">
         <div class="course-info content">
-          <h1>{{ course.name }}</h1>
-          <h2>{{ course.institute }}</h2>
-          <p>{{ course.subject }} || {{ course.level }}</p>
+          <h1>ชื่อคอร์ส {{ course.name }}</h1>
+          <h2>ชื่อสถาบันที่สอน {{ course.institute.name }}</h2>
+          <p>
+          <div class="columns">
+            <div class="column">
+              <strong>วิชา</strong> {{ course.subject }}
+            </div>
+            <div class="column">
+              <strong>ระดับชั้น</strong> {{ course.level }}
+            </div>
+          </div>
+          </p>
+          <p></p>
           <p>ราคา {{ course.price }} บาท / {{ course.hourPerDay * course.studyTimes}} ชั่วโมง</p>
           <hr>
           <h2>รายละเอียด</h2>
           <p>{{ course.description }}</p>
-          <p>รอบเรียน</p>
-          <p>สถานที่</p>
-          <p>โปรโมชั่น</p>
-          <p>เบอร์โทร</p>
-          <p>เว็บไซต์</p>
+          <p><div class="text-header">รอบเรียน</div> {{ course.startDate | formatDate }} - {{ course.endDate | formatDate }}</p>
+          <p>
+          <div class="text-header">สถานที่</div>
+          {{ course.address.line1 }}
+          {{ course.address.line2 }}
+          {{ course.address.city }}
+          {{ course.address.country }}
+          </p>
+          <p><div class="text-header">โปรโมชั่น</div> {{ course.promotionPrice }}</p>
+          <p><div class="text-header">เบอร์โทร</div> {{ course.phone }}</p>
+          <p><div class="text-header">เว็บไซต์</div> {{ course.website }}</p>
+        </div>
+        <div class="course-info content">
+          <h1>คอร์สที่คล้ายกัน</h1>
+          <div class="" v-for="i in 3">
+            <h2>ชื่อคอร์ส {{ course.name }}</h2>
+            <h3>ชื่อสถาบันที่สอน {{ course.institute.name }}</h3>
+            <p>
+            <div class="columns">
+              <div class="column">
+                <strong>วิชา</strong> {{ course.subject }}
+              </div>
+              <div class="column">
+                <strong>ระดับชั้น</strong> {{ course.level }}
+              </div>
+            </div>
+            </p>
+            <p></p>
+            <p>ราคา {{ course.price }} บาท / {{ course.hourPerDay * course.studyTimes}} ชั่วโมง</p>
+            <hr>
+          </div>
         </div>
       </div>
     </div>
@@ -75,12 +111,24 @@ export default {
     return {
       course: {},
       errors: {},
-      isLoading: true
+      isLoading: true,
+      showImg: 'https://dummyimage.com/1024x768/252525/fff&text=1'
     }
   },
   props: [
     'id'
   ],
+  methods: {
+    slider (id) {
+      this.showImg = `https://dummyimage.com/1024x768/252525/fff&text=${id}`
+    }
+  },
+  filters: {
+    formatDate (value) {
+      const dateObj = new Date(value)
+      return dateObj.toDateString()
+    }
+  },
   async mounted () {
     try {
       const course_ = await api.course.getCourseById(this.$route.params.id)
@@ -132,6 +180,19 @@ export default {
   margin-right: 1px !important;
   &:last-child {
     margin-right: 0;
+  }
+  figure.image {
+    cursor: pointer;
+  }
+}
+.text-header {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .text-header {
+    display: block;
   }
 }
 </style>

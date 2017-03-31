@@ -11,8 +11,8 @@
         </div>
       </div>
       <div class="course home--course">
-        <CourseBox :courses="course.all" :isLoading="course.isLoading"></CourseBox>
-        <CourseBox :courses="course.all" :isLoading="course.isLoading"></CourseBox>
+        <CourseBox keys="newer" title="คอร์สเรียนมาใหม่" :courses="course.newer.data" :isLoading="course.newer.isLoading" @subjectChange="subjectChange"></CourseBox>
+        <CourseBox keys="rating" title="คอร์สที่กำลังฮิต" :courses="course.rating.data" :isLoading="course.rating.isLoading" @subjectChange="subjectChange"></CourseBox>
       </div>
       <div class="review columns">
         <div class="column">
@@ -42,32 +42,50 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       course: {
-        all: [],
-        isLoading: true
+        newer: {
+          data: [],
+          isLoading: true
+        },
+        rating: {
+          data: [],
+          isLoading: true
+        }
       }
     }
   },
   methods: {
-    handleSelect  (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    async fetchCourse () {
+    async fetchCourse (filters = {}) {
+      let courses = []
       try {
-        const courses_ = await api.course.getCourses()
-        this.course.all = courses_.body
+        const courses_ = await api.course.getCourses({filters})
+        courses = courses_.body
       } catch (e) {
 
       }
-      this.course.isLoading = false
+      return courses
+    },
+    async subjectChange ({subject, keys}) {
+      this.course[keys].isLoading = true
+      const courses = await this.fetchCourse({subject})
+      this.course[keys].data = courses
+      this.course[keys].isLoading = false
     }
   },
   watch: {
-    '$route' () {
-      this.fetchCourse()
+    async '$route' () {
+      const courses = await this.fetchCourse()
+      this.course.newer.data = courses
+      this.course.rating.data = courses
+      this.course.newer.isLoading = false
+      this.course.rating.isLoading = false
     }
   },
-  mounted () {
-    this.fetchCourse()
+  async mounted () {
+    const courses = await this.fetchCourse()
+    this.course.newer.data = courses
+    this.course.rating.data = courses
+    this.course.newer.isLoading = false
+    this.course.rating.isLoading = false
   },
   components: {
     NavBar,

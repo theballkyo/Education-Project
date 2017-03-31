@@ -3,10 +3,13 @@
   <div class="notification tabs is-right title-bar">
     <h1 class="title">{{ title }}</h1>
     <ul>
-      <li class="is-active"><a>Pictures</a></li>
-      <li><a>Music</a></li>
-      <li><a>Videos</a></li>
-      <li><a>Documents</a></li>
+      <li :class="{ 'is-active': subject === 'eng' }" @click="subjectChange('eng')"><a>ภาษาอังกฤษ</a></li>
+      <li :class="{'is-active': subject === 'Math'}" @click="subjectChange('Math')"><a>คณิตศาสตร์</a></li>
+      <li :class="{'is-active': subject === 'Sci'}" @click="subjectChange('Sci')"><a>วิทยาศาสตร์</a></li>
+      <li :class="{'is-active': subject === 'Com'}" @click="subjectChange('Com')"><a>คอมพิวเตอร์</a></li>
+      <li :class="{'is-active': subject === 'Art'}" @click="subjectChange('Art')"><a>ศิลปะ</a></li>
+      <li :class="{'is-active': subject === 'Admis'}" @click="subjectChange('Admis')"><a>เตรียมแอดมิดชั่น</a></li>
+      <li :class="{'is-active': subject === ''}" @click="subjectChange('')"><a>ทั้งหมด</a></li>
     </ul>
   </div>
   <div class="course--list">
@@ -26,6 +29,11 @@ import Loading from '../Loading.vue'
 
 export default {
   name: 'course-box',
+  data () {
+    return {
+      subject: ''
+    }
+  },
   props: {
     title: {
       type: String,
@@ -38,6 +46,15 @@ export default {
     isLoading: {
       type: Boolean,
       default: true
+    },
+    keys: {
+      type: String
+    }
+  },
+  methods: {
+    subjectChange (subject) {
+      this.$emit('subjectChange', {subject, keys: this.keys})
+      this.subject = subject
     }
   },
   components: {
