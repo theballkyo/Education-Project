@@ -14,11 +14,12 @@
   </div>
   <div class="course--list">
     <Loading v-if="isLoading"></Loading>
-    <div class="columns is-multiline">
-      <div v-for="course in courses" class="column is-one-quarter">
+    <transition-group name="fade-without-leave" tag="div" class="columns is-multiline">
+      <div v-for="course in courses" v-bind:key="course._id" class="column is-one-quarter">
         <CourseCard :course="course"></CourseCard>
       </div>
-    </div>
+      <div v-if="courses.length < 1 && !isLoading" class="column 	has-text-centered" key="notfound">แย่จังเลย ไม่พบคอร์สเรียน</div>
+    </transition-group>
   </div>
 </div>
 </template>
