@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "bulma": "^0.4.0",
     "element-ui": "^1.2.4",
     "jwt-decode": "^2.1.0",
     "node-sass": "^4.5.0",
