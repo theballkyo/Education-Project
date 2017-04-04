@@ -62,6 +62,7 @@ export default {
     },
     async subjectChange ({subject, keys}) {
       this.course[keys].isLoading = true
+      this.course[keys].data = []
       const courses = await this.fetchCourse({subject})
       this.course[keys].data = courses
       this.course[keys].isLoading = false
