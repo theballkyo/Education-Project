@@ -10,7 +10,7 @@ export default {
     this.$router.push('/login')
   },
   methods: {
-    ...mapActions([
+    ...mapActions('user', [
       'logoutRequest'
     ])
   }

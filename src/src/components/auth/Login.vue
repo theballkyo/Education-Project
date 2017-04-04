@@ -26,13 +26,16 @@
         </p>
       </div>
     </form>
-    <div v-else>Login ...</div>
+    <div v-else class="has-text-centered">
+      กำลังทำการ Login ...
+      <Loading></Loading>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
-
+import Loading from '@/components/Loading.vue'
 export default {
   name: 'Login',
   data () {
@@ -46,10 +49,10 @@ export default {
     this.$store.state.user.error = null
   },
   computed: {
-    ...mapState({
-      isLoggedIn: state => state.user.isLoggedIn,
-      isLoginRequest: state => state.user.isLoginRequest,
-      error: state => state.user.error
+    ...mapState('user', {
+      isLoggedIn: state => state.isLoggedIn,
+      isLoginRequest: state => state.isLoginRequest,
+      error: state => state.error
     })
   },
   watch: {
@@ -58,10 +61,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
+    ...mapActions('user', [
       'loginRequest'
     ]),
     loginSubmit () {
+      this.error = null
       this.loginRequest({email: this.email, password: this.password})
     },
     checkLogin () {
@@ -69,6 +73,9 @@ export default {
         this.$router.push('/')
       }
     }
+  },
+  components: {
+    Loading
   }
 }
 </script>

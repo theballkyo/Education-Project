@@ -4,16 +4,13 @@
     <a @click="logoClick" class="nav-item" href="#"><img src="https://dummyimage.com/640x160/252525/fff" alt="Bulma logo"></a>
   </div>
 
-  <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
-  <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
   <label for="menu-toggle" class="nav-toggle">
       <span></span>
       <span></span>
       <span></span>
     </label>
   <input type="checkbox" id="menu-toggle" class="is-hidden"/>
-  <!-- This "nav-menu" is hidden on mobile -->
-  <!-- Add the modifier "is-active" to display it on mobile -->
+
   <div class="nav-right nav-menu">
     <div class="nav-item">
       <p class="control">
@@ -25,12 +22,19 @@
         </span>
       </button>
     </div>
+    <span class="welcome nav-item">Welcome {{ fullname }}</span>
     <span class="nav-item">
-      <router-link to="/login" class="button is-primary">
+      <router-link to="/login" class="button is-primary" v-if="!isLoggedIn">
         <span class="icon">
           <i class="fa fa-sign-in"></i>
         </span>
         <span>Sign in</span>
+      </router-link>
+      <router-link to="/logout" class="button is-primary" v-else>
+        <span class="icon">
+          <i class="fa fa-sign-in"></i>
+        </span>
+        <span>Logout</span>
       </router-link>
     </span>
   </div>
@@ -38,8 +42,24 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'navbar',
+  computed: {
+    ...mapState('user', [
+      'isLoggedIn'
+    ]),
+    ...mapState('user', {
+      fullname (state) {
+        console.log(state.profile)
+        if (Object.keys(state.profile).length === 0) {
+          return 'guest'
+        } else {
+          return `${state.profile.firstName} ${state.profile.lastName}`
+        }
+      }
+    })
+  },
   methods: {
     logoClick () {
       console.log(this.$route.path)
