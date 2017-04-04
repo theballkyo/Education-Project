@@ -35,10 +35,10 @@ export default {
   name: 'search-box',
   data () {
     return {
-      subject: 'Physic',
-      level: '1',
+      subject: 'Eng',
+      level: '',
       institute: '',
-      price: 5000
+      price: 8000
     }
   },
   methods: {
