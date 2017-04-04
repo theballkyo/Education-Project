@@ -57,7 +57,7 @@
             </div>
             </p>
             <p></p>
-            <p>ราคา {{ course.price }} บาท / {{ course.hourPerDay * course.studyTimes}} ชั่วโมง</p>
+            <p><strong>ราคา</strong> {{ course.price }} <strong>บาท</strong> / {{ course.hourPerDay * course.studyTimes}} <strong>ชั่วโมง</strong></p>
             <hr>
             <h2>รายละเอียด</h2>
             <p>{{ course.description }}</p>
