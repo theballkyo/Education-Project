@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import MainV1 from '@/components/layouts/MainV1'
 import Home from '@/components/Home'
 import Course from '@/components/course/Course'
 import CourseDetail from '@/components/course/CourseDetail'
@@ -17,13 +18,19 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
+      component: MainV1,
+      children: [
+        {
+          path: '/',
+          name: 'Home',
+          component: Home
+        },
+        {
+          path: '/login',
+          name: 'Login',
+          component: Login
+        }
+      ]
     },
     {
       path: '/logout',
