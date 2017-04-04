@@ -46,7 +46,7 @@ export default {
     },
     checkLogin () {
       if (this.isLoggedIn === true) {
-        this.$router.push('/course')
+        this.$router.push('/')
       }
     }
   }
