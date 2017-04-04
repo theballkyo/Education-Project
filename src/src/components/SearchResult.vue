@@ -23,6 +23,7 @@
       </div>
     </div>
   </div>
+  <FooterBox/>
 </div>
 </template>
 
@@ -31,6 +32,7 @@ import NavBar from './NavBar.vue'
 import CourseCard from './course/CourseCard'
 import api from '@/api/'
 import Loading from './Loading.vue'
+import FooterBox from '@/components/FooterBox.vue'
 
 export default {
   name: 'searchResult',
@@ -59,7 +61,8 @@ export default {
   components: {
     NavBar,
     CourseCard,
-    Loading
+    Loading,
+    FooterBox
   }
 }
 </script>
