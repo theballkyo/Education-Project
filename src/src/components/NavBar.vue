@@ -26,12 +26,12 @@
       </button>
     </div>
     <span class="nav-item">
-      <a class="button is-primary">
+      <router-link to="/login" class="button is-primary">
         <span class="icon">
           <i class="fa fa-sign-in"></i>
         </span>
         <span>Sign in</span>
-      </a>
+      </router-link>
     </span>
   </div>
 </nav>
