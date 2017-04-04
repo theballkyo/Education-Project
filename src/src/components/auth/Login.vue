@@ -2,9 +2,29 @@
   <div class="login">
     <h2 v-if='error'>{{ error }}</h2>
     <form @submit.prevent="loginSubmit" v-if='!isLoginRequest'>
-      <input v-model="email" type="text" name="email"></input>
-      <input v-model="password" type="password" name="password"></input>
-      <button>Login</button>
+      <div class="field">
+        <p class="control has-icon">
+          <input class="input" name="email" type="email" placeholder="Email" v-model="email">
+          <span class="icon is-small">
+            <i class="fa fa-envelope"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control has-icon">
+          <input class="input" name="password" type="password" placeholder="Password" v-model="password">
+          <span class="icon is-small">
+            <i class="fa fa-lock"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control">
+          <button class="button is-success" @click="loginSubmit">
+            Login
+          </button>
+        </p>
+      </div>
     </form>
     <div v-else>Login ...</div>
   </div>
@@ -18,7 +38,7 @@ export default {
   data () {
     return {
       email: 'faycarey@geekfarm.com',
-      password: 'ntsd'
+      password: 'password'
     }
   },
   created () {
@@ -55,5 +75,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.login {
+  margin: 20px auto;
+  max-width: 300px;
+}
 </style>
