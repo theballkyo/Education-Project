@@ -3,7 +3,7 @@
   <div class="notification tabs is-right title-bar">
     <h1 class="title">{{ title }}</h1>
     <ul>
-      <li :class="{ 'is-active': subject === 'eng' }" @click="subjectChange('eng')"><a>ภาษาอังกฤษ</a></li>
+      <li :class="{ 'is-active': subject === 'Eng' }" @click="subjectChange('Eng')"><a>ภาษาอังกฤษ</a></li>
       <li :class="{'is-active': subject === 'Math'}" @click="subjectChange('Math')"><a>คณิตศาสตร์</a></li>
       <li :class="{'is-active': subject === 'Sci'}" @click="subjectChange('Sci')"><a>วิทยาศาสตร์</a></li>
       <li :class="{'is-active': subject === 'Com'}" @click="subjectChange('Com')"><a>คอมพิวเตอร์</a></li>
@@ -15,7 +15,7 @@
   <div class="course--list">
     <Loading v-if="isLoading"></Loading>
     <transition-group name="fade-without-leave" tag="div" class="columns is-multiline">
-      <div v-for="course in courses" v-bind:key="course._id" class="column is-one-quarter">
+      <div v-if="courses.length > 0 && !isLoading" v-for="course in courses" v-bind:key="course._id" class="column is-one-quarter">
         <CourseCard :course="course"></CourseCard>
       </div>
       <div v-if="courses.length < 1 && !isLoading" class="column 	has-text-centered" key="notfound">แย่จังเลย ไม่พบคอร์สเรียน</div>
