@@ -1,7 +1,7 @@
+import store from '../store/'
 import Vue from 'vue'
-
 const headers = {}
-const _token = Vue.store.state.user.token || null
+const _token = store.state.user.token || null
 
 if (_token !== null) {
   headers.Authorization = `Bearer ${_token}`
