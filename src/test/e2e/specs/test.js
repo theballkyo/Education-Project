@@ -10,7 +10,7 @@ module.exports = {
 
     browser
       .url(devServer)
-      .waitForElementVisible('.home', 20000)
+      .waitForElementVisible('.home', 5000)
       // .assert.elementPresent('.hello')
       // .assert.containsText('h1', 'คอร์สเรียนมาใหม่')
       // .assert.elementCount('img', 1)
