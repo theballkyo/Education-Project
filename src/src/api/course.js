@@ -14,7 +14,6 @@ import { CourseResrouce } from './resource'
  * @param Object option
  */
 const getCourses = ({page, filters = {}} = {}) => {
-  // Todo.
   return CourseResrouce.get({ page, ...filters })
 }
 

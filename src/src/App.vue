@@ -1,13 +1,13 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    document.getElementsByClassName('loading')[0].remove()
+  }
 }
 </script>
 

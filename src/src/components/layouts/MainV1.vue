@@ -1,39 +1,20 @@
 <template>
-<div class="">
-  <div class="columns home--top">
-    <div class="column">
-      <SearchBox></SearchBox>
+  <div class="home main-block">
+    <NavBar></NavBar>
+    <div class="container is-fluid">
+      <router-view></router-view>
     </div>
-    <div class="column">
-      <ImageSlide></ImageSlide>
-    </div>
+    <FooterBox></FooterBox>
   </div>
-  <div class="course home--course">
-    <CourseBox keys="newer" title="คอร์สเรียนมาใหม่" :courses="course.newer.data" :isLoading="course.newer.isLoading" @subjectChange="subjectChange"></CourseBox>
-    <CourseBox keys="rating" title="คอร์สที่กำลังฮิต" :courses="course.rating.data" :isLoading="course.rating.isLoading" @subjectChange="subjectChange"></CourseBox>
-  </div>
-  <div class="review columns">
-    <div class="column">
-      <ReviewBox></ReviewBox>
-    </div>
-    <div class="column">
-      <ReviewBox></ReviewBox>
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
-import NavBar from './NavBar.vue'
-import SearchBox from './SearchBox.vue'
-import ImageSlide from './ImageSlide.vue'
-import CourseBox from './course/CourseBox.vue'
-import ReviewBox from './review/ReviewBox.vue'
-import FooterBox from './FooterBox.vue'
+import NavBar from '../NavBar.vue'
+import FooterBox from '../FooterBox.vue'
 import api from '@/api/'
 
 export default {
-  name: 'hello',
+  name: 'layout-mainv1',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
@@ -62,7 +43,6 @@ export default {
     },
     async subjectChange ({subject, keys}) {
       this.course[keys].isLoading = true
-      this.course[keys].data = []
       const courses = await this.fetchCourse({subject})
       this.course[keys].data = courses
       this.course[keys].isLoading = false
@@ -86,26 +66,10 @@ export default {
   },
   components: {
     NavBar,
-    SearchBox,
-    ImageSlide,
-    CourseBox,
-    FooterBox,
-    ReviewBox
+    FooterBox
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.home--top .column{
-  padding-right: 0px;
-  padding-left: 0px;
-}
-.home--top {
-  margin: 30px 0px;
-}
-</style>
-
 <style>
 .main-block {
   background-color: #c0c0c0;
