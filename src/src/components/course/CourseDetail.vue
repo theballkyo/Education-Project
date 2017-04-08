@@ -8,7 +8,9 @@
           <div class="columns">
             <div class="column">
               <figure class="image">
-                <img :src="showImg">
+                <transition name="fade-without-leave">
+                  <img :key="showImg" :src="showImg">
+                </transition>
               </figure>
             </div>
           </div>
