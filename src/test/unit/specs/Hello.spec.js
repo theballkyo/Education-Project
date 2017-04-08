@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Hello from '@/components/Hello'
-import Login from '@/components/auth/Login'
+// import Login from '@/components/auth/Login'
 
 describe('Hello.vue', () => {
   it('should render correct contents', () => {
