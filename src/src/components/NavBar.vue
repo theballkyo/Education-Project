@@ -51,7 +51,7 @@ export default {
     ]),
     ...mapState('user', {
       fullname (state) {
-        console.log(state.profile)
+        // console.log(state.profile)
         if (Object.keys(state.profile).length === 0) {
           return 'guest'
         } else {
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     logoClick () {
-      console.log(this.$route.path)
+      // console.log(this.$route.path)
       if (this.$route.path === '/') {
         this.$router.go({
           path: '/',

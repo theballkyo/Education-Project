@@ -32,7 +32,7 @@ const actions = {
         commit(types.LOGIN_USER, {token, profile})
       }
     } catch (e) {
-      console.log(e)
+      // console.log(e)
       commit(types.LOGIN_FAILED, `Can't connect to a server. or Token invalid.`)
     }
     commit(types.LOGIN_REQUEST_END)
