@@ -5,23 +5,25 @@ pipeline {
       steps {
         sh '''node --version
 npm --version'''
-        dir(path: 'src')
       }
     }
     stage('install') {
       steps {
-        sh '''npm install
+        sh '''cd src
+npm install
 '''
       }
     }
     stage('unit tests') {
       steps {
-        sh 'npm run unit'
+        sh '''cd src
+npm run unit'''
       }
     }
     stage('build') {
       steps {
-        sh 'npm run build'
+        sh '''cd src
+npm run build'''
       }
     }
     stage('deploy') {
