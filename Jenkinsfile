@@ -1,18 +1,16 @@
 pipeline {
   agent any
-  tools {
-    nodejs 'Node 6.x'
-  }
   stages {
-    stage('Hello') {
+    stage('Prepare') {
       steps {
-        echo 'Hello'
+        sh '''node --version
+npm --version'''
+        dir(path: 'src')
       }
     }
     stage('install') {
       steps {
-        sh '''cd src
-npm install
+        sh '''npm install
 '''
       }
     }
@@ -31,5 +29,8 @@ npm install
         echo 'Deploy simple'
       }
     }
+  }
+  tools {
+    nodejs 'Node 6.x'
   }
 }
