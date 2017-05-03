@@ -14,9 +14,9 @@
   <div class="nav-right nav-menu">
     <div class="nav-item">
       <p class="control">
-        <input class="input" type="text" placeholder="Search a courses">
+        <input class="input" type="text" v-model="subject" placeholder="Search a courses">
       </p>
-      <button class="button">
+      <button @click="searchClick" class="button">
         <span class="icon is-small">
           <i class="fa fa-search"></i>
         </span>
@@ -45,6 +45,11 @@
 import { mapState } from 'vuex'
 export default {
   name: 'navbar',
+  data () {
+    return {
+      subject: ''
+    }
+  },
   computed: {
     ...mapState('user', [
       'isLoggedIn'
@@ -73,6 +78,14 @@ export default {
       } else {
         this.$router.push('/')
       }
+    },
+    searchClick () {
+      this.$router.push({
+        path: '/search',
+        query: {
+          subject: this.subject
+        }
+      })
     }
   }
 }

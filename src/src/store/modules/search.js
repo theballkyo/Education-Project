@@ -5,13 +5,19 @@ const state = {
     subject: '',
     level: '',
     institution: '',
-    price: 0
+    price: [
+      500,
+      1000
+    ]
   }
 }
 
 const actions = {
-  courseSettings ({commit}, settings) {
+  searchCourseSettings ({commit}, settings) {
     commit(types.SEARCH_COURSE_SET, {settings})
+  },
+  priceSetting ({commit}, price) {
+    commit(types.SEARCH_COURSE_SET, {...state.course, ...price})
   }
 }
 

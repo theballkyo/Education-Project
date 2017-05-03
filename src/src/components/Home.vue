@@ -63,24 +63,24 @@ export default {
     async subjectChange ({subject, keys}) {
       this.course[keys].isLoading = true
       this.course[keys].data = []
-      const courses = await this.fetchCourse({subject})
-      this.course[keys].data = courses
+      const courses = await this.fetchCourse({subject, keys})
+      this.course[keys].data = courses.courses
       this.course[keys].isLoading = false
     }
   },
   watch: {
     async '$route' () {
       const courses = await this.fetchCourse()
-      this.course.newer.data = courses
-      this.course.rating.data = courses
+      this.course.newer.data = courses.courses
+      this.course.rating.data = courses.courses
       this.course.newer.isLoading = false
       this.course.rating.isLoading = false
     }
   },
   async mounted () {
     const courses = await this.fetchCourse()
-    this.course.newer.data = courses
-    this.course.rating.data = courses
+    this.course.newer.data = courses.courses
+    this.course.rating.data = courses.courses
     this.course.newer.isLoading = false
     this.course.rating.isLoading = false
   },

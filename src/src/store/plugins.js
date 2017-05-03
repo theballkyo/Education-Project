@@ -4,7 +4,7 @@ import * as types from './mutation-types'
 
 const localStoragePlugin = store => {
   store.subscribe((mutation, datas) => {
-    let syncData = {...datas}
+    let syncData = { user: datas.user }
     if (mutation.type === types.LOGOUT_USER) {
       syncData.user = {}
     }
