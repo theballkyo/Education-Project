@@ -17,6 +17,7 @@
     "element-ui": "^1.2.4",
     "jwt-decode": "^2.1.0",
     "node-sass": "^4.5.0",
+    "pretty-checkbox": "^2.2.1",
     "sass-loader": "^6.0.3",
     "vue": "^2.2.1",
     "vue-resource": "^1.2.1",

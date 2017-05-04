@@ -27,10 +27,14 @@
           </div>-->
           <div class="field">
             <p class="control">
-              <label class="checkbox" v-for="level in levels">
+              <div class="pretty success smooth" v-for="level in levels">
+                <input type="checkbox" v-model="course.level" :value="level"> 
+                <label><i class="fa fa-check checkbox"></i> {{ level }} </label>
+              </div>
+              <!--<label class="checkbox" v-for="level in levels">
                 <input :value="level" type="checkbox" v-model="course.level">
                 {{ level }} 
-              </label>
+              </label>-->
             </p>
           </div>
         </div>
@@ -42,19 +46,16 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <label class="checkbox" v-for="institute in institutes">
-                <input :value="institute" type="checkbox" v-model="course.institute">
-                {{ institute }} 
-              </label>
+              <div class="pretty success smooth" v-for="institute in institutes">
+                <input type="checkbox" v-model="course.institute" :value="institute"> 
+                <label><i class="fa fa-check checkbox"></i> {{ institute }} </label>
+              </div>
             </p>
           </div>
-          <!--<div class="field">
-            <div class="control">
-              <input class="input" type="text" v-model="course.institute" placeholder="ชื่อสถาบันที่สอน">
-            </div>
-          </div>-->
         </div>
       </div>
+      <div class="field is-horizontal"></div>
+      <div class="field is-horizontal"></div>
       <div class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">ช่วงราคา</label>
@@ -174,6 +175,12 @@ form {
     padding: 0 20px;
     label {
       color: gainsboro;
+      i {
+        &.checkbox {
+          background-color: #fff;
+          box-sizing: border-box;
+        }
+      }
     }
   }
 }

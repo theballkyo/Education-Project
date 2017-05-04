@@ -4710,6 +4710,10 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
+pretty-checkbox@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/pretty-checkbox/-/pretty-checkbox-2.2.1.tgz#1d8fe91bd0064531c5853b2c98eef166af0f87cd"
+
 pretty-error@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/pretty-error/-/pretty-error-2.0.2.tgz#a7db19cbb529ca9f0af3d3a2f77d5caf8e5dec23"

@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import 'bulma/css/bulma.css'
 import './assets/fadeStyle.css'
+import 'pretty-checkbox/src/pretty.scss'
 import Vue from 'vue'
 import store from './store'
 import App from './App'
