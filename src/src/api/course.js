@@ -25,7 +25,14 @@ const getCourseById = id => {
   return CourseResrouce.get({ id })
 }
 
+/**
+ * Get all levels in course
+ */
+const getLevels = () => {
+  return CourseResrouce.get({ id: 'level' })
+}
 export default {
   getCourses,
-  getCourseById
+  getCourseById,
+  getLevels
 }

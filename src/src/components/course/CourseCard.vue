@@ -20,10 +20,9 @@
         <div>{{ course.hourPerDay }} ชั่วโมง / ครั้ง</div>
       </div>
       <div class="columns button-menu">
-        <div class="column">
-          <a class="button is-warning is-fullwidth"><i class="fa fa-search" aria-hidden="true"></i>
-</a>
-        </div>
+        <!--<div class="column">
+          <a class="button is-warning is-fullwidth"><i class="fa fa-search" aria-hidden="true"></i></a>
+        </div>-->
         <div class="column">
           <router-link :to="`/course/${course._id}`" class="button is-warning is-fullwidth">คลิกดูรายละเอียด</router-link>
         </div>

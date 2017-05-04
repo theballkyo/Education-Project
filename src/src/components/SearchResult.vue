@@ -16,15 +16,7 @@
       <div class="column is-12"><h3 class="title is-3">พบคอร์สเรียน {{ count }} รายการ จากคำค้นหา {{ filters.subject ? `ชื่อคอร์ส ${filters.subject}` : '' }}{{ filters.level ? ` ระดับชั้น ${filters.level}` : '' }}{{ filters.institute ? ` สถาบัน ${filters.institute}` : '' }}{{ filters.price ? ` ราคาไม่เกิน ${filters.price} บาท` : '' }}</h3>
       </div>
       <div class="column is-12">
-        <nav class="pagination">
-          <a class="pagination-previous" title="This is the first page" disabled>Previous</a>
-          <a class="pagination-next">Next page</a>
-          <ul class="pagination-list">
-            <li v-for="i in Math.ceil(count / filters.limit)">
-              <a @click="changePage(i)" class="pagination-link" :class="page === i ? `is-current` : ''">{{ i }}</a>
-            </li>
-          </ul>
-        </nav>
+        <Pagination :total="count" :perPage="limit" :currentPage="page" @changePage="changePage"></Pagination>
       </div>
       <div class="column is-12">
         <Loading v-if="isLoading"></Loading>
@@ -40,7 +32,7 @@
           <a class="pagination-previous" title="This is the first page" disabled>Previous</a>
           <a class="pagination-next">Next page</a>
           <ul class="pagination-list">
-            <li v-for="i in Math.ceil(count / filters.limit)">
+            <li v-for="i in totalPage">
               <a @click="changePage(i)" class="pagination-link" :class="page === i ? `is-current` : ''">{{ i }}</a>
             </li>
           </ul>
@@ -59,6 +51,7 @@ import api from '@/api/'
 import Loading from './Loading.vue'
 import FooterBox from '@/components/FooterBox.vue'
 import SearchBox from './SearchBox.vue'
+import Pagination from './Pagination.vue'
 
 export default {
   name: 'searchResult',
@@ -72,15 +65,16 @@ export default {
       },
       showSearchBox: false,
       count: 0,
-      page: 1
+      page: 1,
+      limit: 10
     }
   },
   methods: {
     async fetchCourse () {
       this.isLoading = true
-      this.courses = []
+      // this.courses = []
       try {
-        this.filters.limit = 10
+        this.filters.limit = this.limit
         this.filters.page = this.page
         const courses_ = await api.course.getCourses({filters: this.filters})
         this.courses = courses_.body.courses
@@ -115,7 +109,13 @@ export default {
       this.fetchCourse()
     },
     onSearchBoxSearch (datas) {
+      this.page = 1
       this.showSearchBox = false
+    }
+  },
+  computed: {
+    totalPage () {
+      return Math.ceil(this.count / this.filters.limit) || 0
     }
   },
   watch: {
@@ -133,7 +133,8 @@ export default {
     CourseCard,
     Loading,
     FooterBox,
-    SearchBox
+    SearchBox,
+    Pagination
   }
 }
 </script>

@@ -20,10 +20,18 @@
           <label class="label">ระดับชั้น</label>
         </div>
         <div class="field-body">
-          <div class="field">
+          <!--<div class="field">
             <div class="control">
               <input class="input" type="text" v-model="course.level" placeholder="ระดับชั้น">
             </div>
+          </div>-->
+          <div class="field">
+            <p class="control">
+              <label class="checkbox" v-for="level in levels">
+                <input :value="level" type="checkbox" v-model="course.level">
+                {{ level }} 
+              </label>
+            </p>
           </div>
         </div>
       </div>
@@ -33,10 +41,18 @@
         </div>
         <div class="field-body">
           <div class="field">
+            <p class="control">
+              <label class="checkbox" v-for="institute in institutes">
+                <input :value="institute" type="checkbox" v-model="course.institute">
+                {{ institute }} 
+              </label>
+            </p>
+          </div>
+          <!--<div class="field">
             <div class="control">
               <input class="input" type="text" v-model="course.institute" placeholder="ชื่อสถาบันที่สอน">
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="field is-horizontal">
@@ -75,6 +91,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import api from '@/api/'
 import vueSlider from 'vue-slider-component'
 
 export default {
@@ -89,7 +106,7 @@ export default {
         width: '100%',
         height: 8,
         dotSize: 16,
-        min: 300,
+        min: 0,
         max: 10000,
         disabled: false,
         show: true,
@@ -105,21 +122,23 @@ export default {
       },
       course: {
         subject: '',
-        level: '',
-        institute: '',
+        level: [],
+        institute: [],
         price: [2600, 5000]
-      }
+      },
+      levels: [],
+      institutes: []
     }
   },
   methods: {
     ...mapActions('search', [
       'searchCourseSettings'
     ]),
-    onSearch (event) {
+    onSearch () {
       const datas = {
         subject: this.course.subject,
-        level: this.course.level,
-        institute: this.course.institute,
+        level: this.course.level.join(','),
+        institute: this.course.institute.join(','),
         priceMin: this.course.price[0],
         priceMax: this.course.price[1]
       }
@@ -134,13 +153,14 @@ export default {
       this.searchCourseSettings({...this.course})
     }
   },
-  // computed: {
-  //   ...mapState({
-  //     course: state => state.search.course
-  //   })
-  // },
-  mounted () {
-    this.priceSlider.value = this.course.price
+  async beforeCreate () {
+    const levelRaw = await api.course.getLevels()
+    const instituteRaw = await api.institute.getList()
+    this.levels = levelRaw.body
+    this.institutes = instituteRaw.body
+  },
+  destroyed () {
+    console.log('destroyed')
   },
   components: {
     vueSlider

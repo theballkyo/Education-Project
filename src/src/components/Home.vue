@@ -1,10 +1,10 @@
 <template>
 <div class="">
   <div class="columns home--top">
-    <div class="column">
+    <div v-if="onMounted" class="column">
       <SearchBox></SearchBox>
     </div>
-    <div class="column">
+    <div v-if="onMounted" class="column">
       <div class="imageSlideBox">
         <ImageSlider :count="imageList.length" :interval="3000">
           <div v-for="img in imageList" class="slider" :style="`width: ${ 100 / imageList.length }%;`">
@@ -42,7 +42,6 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       course: {
         newer: {
           data: [],
@@ -53,7 +52,8 @@ export default {
           isLoading: true
         }
       },
-      imageList: ['https://lorempixel.com/1024/720/nature/1', 'https://lorempixel.com/1024/720/nature/2', 'https://lorempixel.com/1024/720/nature/3', 'https://lorempixel.com/1024/720/nature/7', 'https://lorempixel.com/1024/720/nature/5', 'https://lorempixel.com/1024/720/nature/6']
+      imageList: ['https://lorempixel.com/1024/720/nature/1', 'https://lorempixel.com/1024/720/nature/2', 'https://lorempixel.com/1024/720/nature/3', 'https://lorempixel.com/1024/720/nature/7', 'https://lorempixel.com/1024/720/nature/5', 'https://lorempixel.com/1024/720/nature/6'],
+      onMounted: false
     }
   },
   methods: {
@@ -63,14 +63,21 @@ export default {
         const courses_ = await api.course.getCourses({filters})
         courses = courses_.body
       } catch (e) {
-
+        // Todo.
       }
       return courses
     },
     async subjectChange ({subject, keys}) {
+      let sortBy = ''
+      if (keys === 'newer') {
+        sortBy = 'createdAt.-1'
+      } else if (keys === 'rating') {
+        sortBy = ''
+      }
+
       this.course[keys].isLoading = true
       this.course[keys].data = []
-      const courses = await this.fetchCourse({subject, keys})
+      const courses = await this.fetchCourse({subject, sortBy})
       this.course[keys].data = courses.courses
       this.course[keys].isLoading = false
     }
@@ -90,6 +97,7 @@ export default {
     this.course.rating.data = courses.courses
     this.course.newer.isLoading = false
     this.course.rating.isLoading = false
+    this.onMounted = true
   },
   components: {
     NavBar,

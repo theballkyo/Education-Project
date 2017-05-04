@@ -45,6 +45,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.circle {
+  cursor: pointer;
+}
 .slider-wrapper {
   position: relative;
   overflow-x: hidden;
