@@ -92,12 +92,12 @@ export default {
     }
   },
   async mounted () {
+    this.onMounted = true
     const courses = await this.fetchCourse()
     this.course.newer.data = courses.courses
     this.course.rating.data = courses.courses
     this.course.newer.isLoading = false
     this.course.rating.isLoading = false
-    this.onMounted = true
   },
   components: {
     NavBar,
