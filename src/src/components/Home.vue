@@ -120,6 +120,8 @@ export default {
 .slider img{
   max-height: 500px;
   width: 100%;
+  line-height: 0;
+  overflow-y: hidden;
 }
 .imageSlideBox {
   background-color: #252525;
