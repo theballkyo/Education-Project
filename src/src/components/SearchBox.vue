@@ -64,7 +64,6 @@
             <p class="control is-expanded has-icons-left has-icons-right">
               <input class="input" type="text" v-model="course.price[1]" placeholder="ราคาไม่เกิน">
             </p>
-            <p class="help is-success">This email is correct</p>
           </div>
         </div>
       </div>
