@@ -5,7 +5,13 @@
       <SearchBox></SearchBox>
     </div>
     <div class="column">
-      <ImageSlide></ImageSlide>
+      <div class="imageSlideBox">
+        <ImageSlider :count="imageList.length" :interval="3000">
+          <div v-for="img in imageList" class="slider" :style="`width: ${ 100 / imageList.length }%;`">
+            <img :src="img">
+          </div>
+        </ImageSlider>
+      </div>
     </div>
   </div>
   <div class="course home--course">
@@ -26,7 +32,7 @@
 <script>
 import NavBar from './NavBar.vue'
 import SearchBox from './SearchBox.vue'
-import ImageSlide from './ImageSlide.vue'
+import ImageSlider from './image/Slider.vue'
 import CourseBox from './course/CourseBox.vue'
 import ReviewBox from './review/ReviewBox.vue'
 import FooterBox from './FooterBox.vue'
@@ -46,7 +52,8 @@ export default {
           data: [],
           isLoading: true
         }
-      }
+      },
+      imageList: ['https://lorempixel.com/1024/720/nature/1', 'https://lorempixel.com/1024/720/nature/2', 'https://lorempixel.com/1024/720/nature/3', 'https://lorempixel.com/1024/720/nature/7', 'https://lorempixel.com/1024/720/nature/5', 'https://lorempixel.com/1024/720/nature/6']
     }
   },
   methods: {
@@ -87,7 +94,7 @@ export default {
   components: {
     NavBar,
     SearchBox,
-    ImageSlide,
+    ImageSlider,
     CourseBox,
     FooterBox,
     ReviewBox
@@ -109,5 +116,13 @@ export default {
 <style>
 .main-block {
   background-color: #c0c0c0;
+}
+.slider img{
+  max-height: 500px;
+  width: 100%;
+}
+.imageSlideBox {
+  background-color: #252525;
+  border-left: 1px solid #f0f8ff;
 }
 </style>
