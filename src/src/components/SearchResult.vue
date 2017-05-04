@@ -28,15 +28,7 @@
         </transition-group>
       </div>
       <div class="column is-12">
-        <nav class="pagination">
-          <a class="pagination-previous" title="This is the first page" disabled>Previous</a>
-          <a class="pagination-next">Next page</a>
-          <ul class="pagination-list">
-            <li v-for="i in totalPage">
-              <a @click="changePage(i)" class="pagination-link" :class="page === i ? `is-current` : ''">{{ i }}</a>
-            </li>
-          </ul>
-        </nav>
+        <Pagination :total="count" :perPage="limit" :currentPage="page" @changePage="changePage"></Pagination>
       </div>
     </div>
   </div>

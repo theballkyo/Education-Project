@@ -1,7 +1,7 @@
 <template>
-  <nav class="pagination">
-    <!--<a v-if="page > 1" @click="changePage(page - 1)" class="pagination-previous" title="This is the first page">Previous</a>-->
-    <!--<a v-if="page < totalPage" @click="changePage(page + 1)" class="pagination-next">Next page</a>-->
+  <nav class="pagination is-centered">
+    <a :disabled="currentPage <= 1" @click="changePage(currentPage - 1)" class="pagination-previous">Previous</a>
+    <a :disabled="currentPage === pageCount" @click="changePage(currentPage + 1)" class="pagination-next">Next page</a>
     <ul class="pagination-list">
       <li v-if="hasFirst"><a class="pagination-link" @click="changePage(1)">1</a></li>
       <li v-if="hasFirstEllipsis"><span class="pagination-ellipsis">&hellip;</span></li>
@@ -22,6 +22,9 @@ export default {
   },
   methods: {
     changePage (page) {
+      if (page < 1 || page > this.pageCount) {
+        return
+      }
       this.$emit('changePage', page)
     }
   },
