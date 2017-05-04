@@ -113,15 +113,19 @@ export default {
 }
 </style>
 
-<style>
+<style lang="scss">
 .main-block {
   background-color: #c0c0c0;
 }
-.slider img{
-  max-height: 500px;
-  width: 100%;
+.slider {
   line-height: 0;
   overflow-y: hidden;
+  
+  img: {
+    max-height: 500px;
+    width: 100%;
+  }
+
 }
 .imageSlideBox {
   background-color: #252525;
