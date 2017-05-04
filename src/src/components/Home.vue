@@ -121,7 +121,7 @@ export default {
   line-height: 0;
   overflow-y: hidden;
   
-  img: {
+  img {
     max-height: 500px;
     width: 100%;
   }
