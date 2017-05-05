@@ -52,7 +52,7 @@ export default {
           isLoading: true
         }
       },
-      imageList: ['https://lorempixel.com/1024/720/nature/1', 'https://lorempixel.com/1024/720/nature/2', 'https://lorempixel.com/1024/720/nature/3', 'https://lorempixel.com/1024/720/nature/7', 'https://lorempixel.com/1024/720/nature/5', 'https://lorempixel.com/1024/720/nature/6'],
+      imageList: [],
       onMounted: false
     }
   },
@@ -89,6 +89,11 @@ export default {
       this.course.rating.data = courses.courses
       this.course.newer.isLoading = false
       this.course.rating.isLoading = false
+    }
+  },
+  created () {
+    for (let i = 0; i < 10; i++) {
+      this.imageList.push(`https://unsplash.it/1024/720/?random&image=${i}`)
     }
   },
   async mounted () {
