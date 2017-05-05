@@ -14,8 +14,8 @@
   </div>
   <div class="course--list">
     <Loading v-if="isLoading"></Loading>
-    <transition-group name="fade-without-leave" tag="div" class="columns is-multiline">
-      <div v-if="courses.length > 0 && !isLoading" v-for="course in courses" v-bind:key="course._id" class="column is-one-quarter">
+    <transition-group name="fade-without-leave" tag="div" class="columns is-mobile is-multiline">
+      <div v-if="courses.length > 0 && !isLoading" v-for="course in courses" v-bind:key="course._id" class="column is-one-quarter-desktop is-one-mobile is-half-tablet">
         <CourseCard :course="course"></CourseCard>
       </div>
       <div v-if="courses.length < 1 && !isLoading" class="column 	has-text-centered" key="notfound">แย่จังเลย ไม่พบคอร์สเรียน</div>

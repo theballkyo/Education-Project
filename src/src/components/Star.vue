@@ -1,6 +1,6 @@
 <template>
 <div class="starRating" :data-rating="`r${Math.ceil(rating)}`">
-  Star Rating: {{ rating }}
+  {{ text }} {{ rating }}
 </div>
 </template>
 
@@ -8,7 +8,8 @@
 export default {
   name: 'start',
   props: [
-    'rating'
+    'rating',
+    'text'
   ]
 }
 </script>
@@ -28,6 +29,7 @@ export default {
 
 
 .starRating {
+  display: inline;
   &:before{
     font: normal normal normal 14px/1 FontAwesome;
     color: #ff8827;

@@ -68,6 +68,8 @@ export default {
       try {
         this.filters.limit = this.limit
         this.filters.page = this.page
+        // Remove not use key.
+        delete this.filters.t
         const courses_ = await api.course.getCourses({filters: this.filters})
         this.courses = courses_.body.courses
         this.count = courses_.body.count
@@ -84,7 +86,8 @@ export default {
         this.sort.price = 'desc'
         this.filters.sortBy = 'price.-1'
       }
-      this.fetchCourse()
+      this.refresh()
+      // this.fetchCourse()
       // this.courses.sort((a, b) => {
       //   if (this.sort.price === 'asc') {
       //     return a.price - b.price
@@ -98,11 +101,25 @@ export default {
     },
     changePage (page) {
       this.page = page
-      this.fetchCourse()
+      this.refresh()
     },
     onSearchBoxSearch (datas) {
       this.page = 1
       this.showSearchBox = false
+    },
+    refresh () {
+      const datas = {
+        ...this.filters,
+        sortBy: this.filters.sortBy,
+        page: this.page,
+        // Fix bug is sortBy is change but router push not working ?!
+        t: Math.floor((Math.random() * 10) + 1)
+      }
+      // this.searchCourseSettings({...this.course})
+      this.$router.push({
+        path: '/search',
+        query: datas
+      })
     }
   },
   computed: {
@@ -116,8 +133,11 @@ export default {
       this.fetchCourse()
     }
   },
-  mounted () {
+  created () {
     this.filters = this.$route.query
+    this.page = parseInt(this.filters.page) || 1
+  },
+  mounted () {
     this.fetchCourse()
   },
   components: {

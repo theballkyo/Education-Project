@@ -20,12 +20,12 @@
             <div class="column">
               <div class="review">
                 <div class="column is-12 review--header">
-                  <h1 class="title">รีวิว {{ course.reviews.length }} คน</h1>
+                  <h1 class="title">รีวิว {{ course.reviews.length }} คน <small>คะแนนเฉลี่ย <Star :rating="averageRating"></Star></small></h1>
                 </div>
                 <div v-for="review in course.reviews" class="column is-12 review--box content">
                   <div class="columns">
                     <div class="column">
-                      <Star :rating="review.rating"></Star>
+                      คะแนน <Star :rating="review.rating"></Star>
                     </div>
                     <div class="column">
                       <div class="report has-text-right">
@@ -43,8 +43,8 @@
         </div>
         <div class="column">
           <div class="course-info content">
-            <h1>ชื่อคอร์ส {{ course.name }}</h1>
-            <h2>ชื่อสถาบันที่สอน {{ course.institute.name }}</h2>
+            <h1 class="title">ชื่อคอร์ส <small>{{ course.name }}</small></h1>
+            <h1 class="title">ชื่อสถาบันที่สอน <small>{{ course.institute.name }}</small></h1>
             <p>
               <div class="columns">
                 <div class="column">
@@ -128,6 +128,15 @@ export default {
       this.showImg = `https://dummyimage.com/1024x768/252525/fff&text=${id}`
     }
   },
+  computed: {
+    averageRating () {
+      let total = 0.0
+      this.course.reviews.forEach((review) => {
+        total += review.rating
+      })
+      return total / this.course.reviews.length
+    }
+  },
   filters: {
     formatDate (value) {
       const dateObj = new Date(value)
@@ -161,6 +170,17 @@ export default {
 .course-info {
   background: #fff;
   padding: 10px 20px;
+
+  h1 {
+    &.title {
+      color: #5a5a5a;
+      small {
+        color: #2d2d2d;
+        /* float: right; */
+        font-size: 0.6em;
+      }
+    }
+  }
 }
 
 .review {
@@ -198,6 +218,7 @@ export default {
   display: inline-block;
   width: 100px;
   font-weight: bold;
+  color: #5a5a5a;
 }
 
 @media (max-width: 768px) {
