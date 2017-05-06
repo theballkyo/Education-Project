@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     changePage (page) {
-      if (page < 1 || page > this.pageCount) {
+      if (page < 1 || page > this.pageCount || this.currentPage === page) {
         return
       }
       this.$emit('changePage', page)
