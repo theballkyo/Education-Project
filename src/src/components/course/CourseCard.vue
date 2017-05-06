@@ -9,8 +9,8 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4">{{ course.institute.name }}</p>
-        <p class="subtitle is-6">{{ course.name }}</p>
+        <p class="title is-4">{{ course.name }}</p>
+        <p class="subtitle is-6">{{ course.institute.name }}</p>
       </div>
     </div>
 
