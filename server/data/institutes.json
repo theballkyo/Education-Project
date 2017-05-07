@@ -1,0 +1,10 @@
+[{"name":"Meembee","coverImage":"http://dummyimage.com/181x105.jpg/cc0000/ffffff","address":{"coordinates":[177,27],"line1":"15 Barnett Street","line2":"Harper","city":"El Lolo","country":"Honduras"}},
+{"name":"Eamia","coverImage":"http://dummyimage.com/155x193.bmp/cc0000/ffffff","address":{"coordinates":[56,72],"line1":"57 Summit Way","line2":"Bunker Hill","city":"Donghui","country":"China"}},
+{"name":"Jabbercube","coverImage":"http://dummyimage.com/175x112.png/dddddd/000000","address":{"coordinates":[19,52],"line1":"68151 Kipling Road","line2":"Eagan","city":"Heihe","country":"China"}},
+{"name":"Quatz","coverImage":"http://dummyimage.com/221x248.jpg/5fa2dd/ffffff","address":{"coordinates":[31,71],"line1":"061 Dovetail Junction","line2":"Bunker Hill","city":"Spokoynaya","country":"Russia","postalCode":"352265"}},
+{"name":"Photojam","coverImage":"http://dummyimage.com/247x149.bmp/cc0000/ffffff","address":{"coordinates":[88,55],"line1":"20 Jenna Street","line2":"Elmside","city":"Shushenskoye","country":"Russia","postalCode":"655672"}},
+{"name":"Skilith","coverImage":"http://dummyimage.com/145x192.jpg/5fa2dd/ffffff","address":{"coordinates":[36,38],"line1":"42 Straubel Alley","line2":"Summerview","city":"Bugang","country":"Philippines","postalCode":"9803"}},
+{"name":"Edgeclub","coverImage":"http://dummyimage.com/202x184.bmp/ff4444/ffffff","address":{"coordinates":[75,76],"line1":"88385 Kinsman Street","line2":"Elka","city":"Mrozy","country":"Poland","postalCode":"05-320"}},
+{"name":"Topdrive","coverImage":"http://dummyimage.com/180x149.jpg/ff4444/ffffff","address":{"coordinates":[147,21],"line1":"974 Ridge Oak Crossing","line2":"Maywood","city":"Privolzhskiy","country":"Russia","postalCode":"413138"}},
+{"name":"Shuffletag","coverImage":"http://dummyimage.com/105x244.bmp/dddddd/000000","address":{"coordinates":[151,10],"line1":"36 Northview Center","line2":"Quincy","city":"Cheongpyeong","country":"South Korea"}},
+{"name":"Abatz","coverImage":"http://dummyimage.com/209x113.png/dddddd/000000","address":{"coordinates":[15,81],"line1":"1170 Reindahl Drive","line2":"Mccormick","city":"Pondohan","country":"Indonesia"}}]
