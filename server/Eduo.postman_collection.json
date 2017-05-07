@@ -1,0 +1,221 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Eduo",
+		"_postman_id": "c2498a2b-7ddc-2cf9-cee4-d9a4e1d3477b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Institude-service",
+			"description": "",
+			"item": [
+				{
+					"name": "Get 1 Institude",
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/institute/58d3ec7a9b90f013a0a44f5c",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post Institude Create",
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/institute/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"KMITL Inc.\",\r\n  \"coverImage\": \"http://dummyimage.com/228x239.png/5fa2dd/ffffff\",\r\n  \"address\": {\r\n    \"coordinates\": [\r\n      150,\r\n      42\r\n    ],\r\n    \"line1\": \"KMITL\",\r\n    \"line2\": \"Ladkrabang\",\r\n    \"city\": \"Bangkok\",\r\n    \"country\": \"Thailand\"\r\n  }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "course-service",
+			"description": "",
+			"item": [
+				{
+					"name": "Search Course",
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/coursesearch?text=math",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject\": \"Course kuy\",\r\n    \"description\": \"description\",\r\n    \"hour\": 4,\r\n    \"price\": 1602.4834,\r\n    \"startDate\": \"2015-04-24T10:44:24\",\r\n    \"endDate\": \"2015-04-29T12:28:27\",\r\n    \"email\": \"wongstout@geekko.com\",\r\n    \"courseTime\": \"10:55\",\r\n    \"promotion_price\": 2065,\r\n    \"rating\": 1.7623,\r\n    \"address\": \"Address\",\r\n    \"website\": \"www.google.com\",\r\n    \"phone\": \"080-00000000\"\r\n }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get 1 Course",
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/course/58c28b81a2a11f0e8cad1b45",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Course",
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/course/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Course 10085d\",\r\n  \"subject\": \"English\",\r\n  \"description\": \"Description: 983292674778504161422681998221545681370685138755835844290585769644119193333\",\r\n  \"price\": 7028,\r\n  \"teacher\": [\r\n    \"teacher25\"\r\n  ],\r\n  \"startDate\": \"3/27/2017\",\r\n  \"endDate\": \"6/15/2017\",\r\n  \"email\": \"mbishop7@google.ru\",\r\n  \"daysOfWeek\": [\r\n    \"Sunday\"\r\n  ],\r\n  \"startTimeHour\": 8,\r\n  \"startTimeMinute\": 17,\r\n  \"hourPerDay\": 1,\r\n  \"studyTimes\": 47,\r\n  \"promotionPrice\": 70,\r\n  \"rating\": 5.0,\r\n  \"website\": \"irs.gov\",\r\n  \"tags\": [\r\n    \"Tag:56\"\r\n  ],\r\n  \"images\": \"http://dummyimage.com/108x197.png/5fa2dd/ffffff\",\r\n  \"coverImage\": \"http://dummyimage.com/187x245.bmp/ff4444/ffffff\",\r\n  \"address\": {\r\n    \"coordinates\": [\r\n      163,\r\n      9\r\n    ],\r\n    \"line1\": \"94 Novick Terrace\",\r\n    \"line2\": \"Meadow Vale\",\r\n    \"city\": \"Qinggou\",\r\n    \"country\": \"China\",\r\n    \"private\": true\r\n  }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "getCourses",
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/course?subject=Math&limit=2&page=0",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "get courses \nparam limit, page, tag"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "review-service",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Review",
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/review/create/58d3ad78be5cdb08e40e74c3",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"comment\": \"constitutions\",\r\n  \"rating\": 3.5\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user-service",
+			"description": "",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"//postman.setEnvironmentVariable(\"token\", jsonData.accessToken);\r",
+									"postman.setGlobalVariable(\"token\", jsonData.accessToken);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"user@gmail.com\",\n\t\"password\" : \"user\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"url": "http://127.0.0.1:3500/api/v1/register",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"User\",\r\n    \"firstName\": \"user\",\r\n    \"lastName\": \"user\",\r\n    \"email\": \"email@gmail.com\",\r\n    \"password\": \"password\",\r\n    \"avatarUrl\": \"img/thumbnail.png\",\r\n    \"phone\": \"+1 123-1234-123\",\r\n    \"role\": \"student\",\r\n    \"address\": {\r\n      \"coordinates\": [\r\n        73,\r\n        56\r\n      ],\r\n      \"line1\": \"Address 1\",\r\n      \"city\": \"City 1\",\r\n      \"postalCode\": \"10000\",\r\n      \"state\": \"state\",\r\n      \"primary\": true\r\n    }\r\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
