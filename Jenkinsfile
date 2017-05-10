@@ -1,38 +1,27 @@
 pipeline {
   agent any
   stages {
-    stage('Prepare') {
-      steps {
-        sh '''node --version
-npm --version'''
-      }
-    }
-    stage('install') {
-      steps {
-        sh '''cd client
-npm install
-'''
-      }
-    }
-    stage('unit tests') {
-      steps {
-        sh '''cd client
-npm run unit'''
-      }
-    }
-    stage('build') {
-      steps {
-        sh '''cd client
-npm run build'''
-      }
-    }
-    stage('deploy') {
-      steps {
-        echo 'Deploy simple'
-      }
-    }
-  }
-  tools {
-    nodejs 'Node 7.x'
+     sshagent(credentials: ['c58c6351-5041-4f90-8fa5-fe8edebd82b3']) {
+        nodejs(nodeJSInstallationName: 'Node 7.x') {
+            dir('client/') {
+                stage('test') {
+                    sh 'ssh -o StrictHostKeyChecking=no root@lab.ryoka.tk -p 4565 ls'
+                }
+                stage('Prepare') {
+                    sh 'node --version'
+                    sh 'npm --version'
+                }
+                stage('Install') {
+                    sh 'npm install'
+                }
+                stage('Testing') {
+                    sh 'npm run unit'
+                }
+                stage('Build') {
+                    sh 'npm run build'
+                }
+            }
+        }
+   }    
   }
 }
