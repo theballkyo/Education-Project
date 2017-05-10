@@ -1,10 +1,10 @@
 pipeline {
-  sshagent(credentials: ['c58c6351-5041-4f90-8fa5-fe8edebd82b3']) {
-        nodejs(nodeJSInstallationName: 'Node 7.x') {
-            dir('client/') {
-            }
-        }
-  }
+  //sshagent(credentials: ['c58c6351-5041-4f90-8fa5-fe8edebd82b3']) {
+  //      nodejs(nodeJSInstallationName: 'Node 7.x') {
+  //          dir('client/') {
+  //          }
+  //      }
+  //}
   agent any
   stages {
     stage('test') {
