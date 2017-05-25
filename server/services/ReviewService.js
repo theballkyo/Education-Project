@@ -86,7 +86,7 @@ function* addReview(courseId ,reviewEntity){//not done
 
 function* getSingle(id) {
     try{
-        const review = yield Review.findOne({_id: id});
+        const review = yield Review.findOne({_id: id}).populate('userId', 'firstName lastName').select('comment userId');
         return review.toObject();
     }
     catch(e){
