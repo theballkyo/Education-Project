@@ -9,6 +9,8 @@ import Logout from '@/components/auth/Logout'
 import User from '@/components/User'
 import UserHome from '@/components/UserHome'
 import SearchResult from '@/components/SearchResult'
+import ReviewReport from '@/components/review/Report'
+
 // import * as guard from './guard'
 
 Vue.use(Router)
@@ -19,6 +21,7 @@ const router = new Router({
     {
       path: '/',
       component: MainV1,
+      props: true,
       children: [
         {
           path: '/',
@@ -29,6 +32,12 @@ const router = new Router({
           path: '/login',
           name: 'Login',
           component: Login
+        },
+        {
+          path: '/report/review/:id',
+          name: 'reviewReport',
+          component: ReviewReport,
+          props: true
         }
       ]
     },

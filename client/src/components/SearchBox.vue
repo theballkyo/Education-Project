@@ -46,10 +46,10 @@
         <div class="field-body">
           <div class="field institute">
             <p class="control">
-              <span v-for="institute in instituteSelect" class="tag is-black">{{ institute }} <button @click="removeInstitute(institute)" class="delete is-small"></button></span>
-              <input @blur="onBlur" @click="onClick" class="input" type="text" ref="institute" v-model="course.institute" placeholder="ชื่อสถาบัน">
+              <span v-for="institute in course.institute" class="tag is-black">{{ institute }} <button @click="removeInstitute(institute)" class="delete is-small"></button></span>
+              <input @blur="onBlur" @click="onClick" class="input" type="text" ref="institute" placeholder="ชื่อสถาบัน">
               <div @mouseover="onHover" @mouseleave="onMouseleave" v-show="showTagInput || tagListFocus" class="tags-input">
-                <div for="institute" v-for="institute in institutes.filter(ins => instituteSelect.indexOf(ins) < 0)" class="tags-input--data" @click="onInstituteClick(institute)">{{ institute }}</div>
+                <div for="institute" v-for="institute in institutes.filter(ins => course.institute.indexOf(ins) < 0)" class="tags-input--data" @click="onInstituteClick(institute)">{{ institute }}</div>
               </div>
               <!--<div class="pretty success smooth" v-for="institute in institutes">
                 <input type="checkbox" v-model="course.institute" :value="institute"> 
@@ -126,17 +126,24 @@ export default {
           'backgroundColor': '#ffdd57'
         }
       },
-      course: {
-        subject: '',
-        level: [],
-        institute: [],
-        price: [2600, 5000]
-      },
       levels: [],
       institutes: [],
-      instituteSelect: [],
+      // instituteSelect: [],
       showTagInput: false,
       tagListFocus: false
+    }
+  },
+  props: {
+    course: {
+      type: Object,
+      default: function () {
+        return {
+          subject: '',
+          level: [],
+          institute: [],
+          price: [2600, 5000]
+        }
+      }
     }
   },
   methods: {
@@ -174,14 +181,14 @@ export default {
       this.tagListFocus = false
     },
     onInstituteClick (ins) {
-      this.instituteSelect.push(ins)
+      this.course.institute.push(ins)
       this.$refs.institute.focus()
       this.showTagInput = true
     },
     removeInstitute (ins) {
-      let index_ = this.instituteSelect.indexOf(ins)
+      let index_ = this.course.institute.indexOf(ins)
       if (index_ !== -1) {
-        this.instituteSelect.splice(index_, 1)
+        this.course.institute.splice(index_, 1)
       }
     }
   },

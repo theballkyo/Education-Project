@@ -26,4 +26,5 @@ Vue.http.interceptors.push((request, next) => {
 })
 
 export const AuthResource = Vue.resource(API_ROOT + 'login')
-export const CourseResrouce = Vue.resource(API_ROOT + 'course{/id}')
+export const CourseResource = Vue.resource(API_ROOT + 'course{/id}')
+export const ReviewResource = Vue.resource(API_ROOT + 'review{/id}')

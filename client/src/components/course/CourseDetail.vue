@@ -29,7 +29,8 @@
                     </div>
                     <div class="column">
                       <div class="report has-text-right">
-                        <a href="#">ร้องเรียนรีวิวนี้</a>
+                        <router-link :to="`/report/review/${review.id}`" class="">ร้องเรียนรีวิวนี้</router-link>
+                        <a href=""></a>
                       </div>
                     </div>
                   </div>
