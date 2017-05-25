@@ -44,12 +44,17 @@
           <label class="label">ชื่อสถาบันที่สอน</label>
         </div>
         <div class="field-body">
-          <div class="field">
+          <div class="field institute">
             <p class="control">
-              <div class="pretty success smooth" v-for="institute in institutes">
+              <span v-for="institute in instituteSelect" class="tag is-black">{{ institute }} <button @click="removeInstitute(institute)" class="delete is-small"></button></span>
+              <input @blur="onBlur" @click="onClick" class="input" type="text" ref="institute" v-model="course.institute" placeholder="ชื่อสถาบัน">
+              <div @mouseover="onHover" @mouseleave="onMouseleave" v-show="showTagInput || tagListFocus" class="tags-input">
+                <div for="institute" v-for="institute in institutes.filter(ins => instituteSelect.indexOf(ins) < 0)" class="tags-input--data" @click="onInstituteClick(institute)">{{ institute }}</div>
+              </div>
+              <!--<div class="pretty success smooth" v-for="institute in institutes">
                 <input type="checkbox" v-model="course.institute" :value="institute"> 
                 <label><i class="fa fa-check checkbox"></i> {{ institute }} </label>
-              </div>
+              </div>-->
             </p>
           </div>
         </div>
@@ -128,7 +133,10 @@ export default {
         price: [2600, 5000]
       },
       levels: [],
-      institutes: []
+      institutes: [],
+      instituteSelect: [],
+      showTagInput: false,
+      tagListFocus: false
     }
   },
   methods: {
@@ -152,6 +160,29 @@ export default {
     },
     onPriceChange (value) {
       this.searchCourseSettings({...this.course})
+    },
+    onBlur (e) {
+      this.showTagInput = false
+    },
+    onClick (e) {
+      this.showTagInput = true
+    },
+    onHover (e) {
+      this.tagListFocus = true
+    },
+    onMouseleave (e) {
+      this.tagListFocus = false
+    },
+    onInstituteClick (ins) {
+      this.instituteSelect.push(ins)
+      this.$refs.institute.focus()
+      this.showTagInput = true
+    },
+    removeInstitute (ins) {
+      let index_ = this.instituteSelect.indexOf(ins)
+      if (index_ !== -1) {
+        this.instituteSelect.splice(index_, 1)
+      }
     }
   },
   async beforeCreate () {
@@ -192,5 +223,31 @@ form {
 .title {
   color: #fff;
   padding: 25px 40px 0 40px;
+}
+.tags-input {
+  position: absolute;
+  z-index: 10;
+  overflow-y: scroll;
+  max-height: 250px;
+  width: 100%;
+}
+.tags-input--data {
+  background: white;
+  padding: 1px;
+  border-bottom: #d2d2d2 solid 1px;
+  border-right: #D2D2D3 solid 1px;
+  border-left: #d2d2d2 solid 1px;
+  width: 100%;
+  display: inline-block;
+  height: 50px;
+  position: relative;
+  top: 50%;
+  line-height: 300%;
+  &:hover {
+    background-color: whitesmoke;
+  }
+}
+.field.institute {
+  position: relative;
 }
 </style>
