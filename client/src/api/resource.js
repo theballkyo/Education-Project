@@ -23,7 +23,7 @@ Vue.http.interceptors.push((request, next) => {
     }
   })
 })
-
+export const http = Vue.http
 export const AuthResource = Vue.resource(API_ROOT + 'user/login')
 export const CourseResource = Vue.resource(API_ROOT + 'course{/id}')
 export const ReviewResource = Vue.resource(API_ROOT + 'review{/id}')

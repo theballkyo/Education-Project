@@ -1,9 +1,5 @@
-// import Vue from 'vue'
-// import { API_URL } from './BaseAPI'
-import { CourseResource } from './resource'
-
-// import http from '@/utils/http-helper'
-// const AUTH_URL = 'https://mcapi.ca/query/play.minesuperior.com/info'
+import { CourseResource, http } from './resource'
+import { API_ROOT } from '@/config'
 
 /**
  * Get all courses
@@ -48,10 +44,18 @@ const getLevel = () => {
   return CourseResource.get({ id: 'levels' })
 }
 
+/**
+ * Get a course is create by user
+ */
+const getUserCourse = () => {
+  return http.get(API_ROOT + 'course/user/list')
+}
+
 export default {
   getCourses,
   getCourseById,
   searchHelper,
   save,
-  getLevel
+  getLevel,
+  getUserCourse
 }
