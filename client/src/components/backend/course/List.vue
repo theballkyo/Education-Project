@@ -13,7 +13,7 @@
         <tr v-for="course in courses">
           <td>{{ course.name }}</td>
           <td>{{ course.subject }}</td>
-          <td>{{ course.level }}</td>
+          <td>{{ course.level.name }}</td>
           <td><router-link :to="`/backend/course/edit/${course._id}`">แก้ไข</router-link></td>
         </tr>
       </tbody>

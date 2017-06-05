@@ -52,7 +52,7 @@
                   <strong>วิชา</strong> {{ course.subject }}
                 </div>
                 <div class="column">
-                  <strong>ระดับชั้น</strong> {{ course.level }}
+                  <strong>ระดับชั้น</strong> {{ course.level.name }}
                 </div>
               </div>
             </p>
@@ -85,7 +85,7 @@
                     <strong>วิชา</strong> {{ course.subject }}
                   </div>
                   <div class="column">
-                    <strong>ระดับชั้น</strong> {{ course.level }}
+                    <strong>ระดับชั้น</strong> {{ course.level.name }}
                   </div>
                 </div>
               </p>
