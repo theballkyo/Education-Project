@@ -14,7 +14,7 @@ const findOne = (id) => {
     populate: {
       path: 'userId'
     }
-  }).exec()
+  }).populate('level').exec()
 }
 
 const search = async ({ page = 0, limit = 10, sort = { 'createdAt': -1 }, filters = {}, select = '' }) => {
