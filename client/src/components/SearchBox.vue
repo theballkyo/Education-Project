@@ -28,8 +28,8 @@
           <div class="field">
             <p class="control">
               <div class="pretty success smooth" v-for="level in levels">
-                <input type="checkbox" v-model="course.level" :value="level"> 
-                <label><i class="fa fa-check checkbox"></i> {{ level }} </label>
+                <input type="checkbox" v-model="course.level" :value="level._id"> 
+                <label><i class="fa fa-check checkbox"></i> {{ level.name }} </label>
               </div>
               <!--<label class="checkbox" v-for="level in levels">
                 <input :value="level" type="checkbox" v-model="course.level">

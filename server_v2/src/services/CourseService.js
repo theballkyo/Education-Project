@@ -1,6 +1,7 @@
 const models = require('../models')
 const Course = models.Course
 const Institute = models.Institute
+const Level = models.Levels
 
 // .with('username', 'birthyear').without('password', 'access_token');
 
@@ -20,7 +21,7 @@ const findOne = (id) => {
 const search = async ({ page = 0, limit = 10, sort = { 'createdAt': -1 }, filters = {}, select = '' }) => {
   page = parseInt(page) || 0
   limit = parseInt(limit) || 10
-  console.log(filters)
+  // console.log(filters)
   try {
     if (filters.institute) {
       const institute_ = await Institute.find({ name: { $in: filters.institute } }).select('_id')
@@ -52,7 +53,7 @@ const search = async ({ page = 0, limit = 10, sort = { 'createdAt': -1 }, filter
 
 const searchHelp = async () => {
   try {
-    const levels = await Course.distinct('level').exec()
+    const levels = await Level.find({disabled: false}).select('_id name')
 
     const institute = await Institute.find({}, '-_id').select('name')
     const institutes = institute.map((ins) => {
