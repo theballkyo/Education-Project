@@ -176,61 +176,12 @@
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label"></label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="columns">
-
-            <div class="column">
-              <div class="field">
-                <label class="label">จังหวัด</label>
-                <p class="control is-expanded has-icons-left">
-                  <input class="input" type="text" placeholder="จังหวัด" v-model="course.address.city">
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </p>
-              </div>
-            </div>
-
-            <div class="column">
-              <div class="field">
-                <label class="label">ประเทศ</label>
-                <p class="control is-expanded has-icons-left">
-                  <input class="input" type="text" placeholder="ประเทศ" v-model="course.address.country">
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </p>
-              </div>
-            </div>
-
-            <div class="column">
-              <div class="field">
-                <label class="label">รหัสไปร์ษณีย์</label>
-                <p class="control is-expanded has-icons-left">
-                  <input class="input" type="text" placeholder="รหัสไปร์ษณีย์" v-model="course.address.postalCode">
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>  
-
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
         <label class="label">ระยะเวลาที่สอน</label>
       </div>
       <div class="field-body">
         <div class="field">
           <p class="control is-expanded has-icons-left has-icons-right">
-            <datepicker :config="{ wrap: true, mode: 'range', minDate: 'today', enableTime: true }" placeholder="ระยะเวลาที่สอน" readonly v-model="teachTime">
+            <datepicker :config="{ wrap: true, mode: 'range', enableTime: true }" placeholder="ระยะเวลาที่สอน" readonly v-model="teachTime" :value="teachTimeCal">
             </datepicker>
             <!--<input class="input" type="text" placeholder="สิ้นสุด" v-model="course.endDate">
             <span class="icon is-small is-left">
@@ -512,11 +463,19 @@ export default {
   computed: {
     selectLevelComputed () {
       return this.levelList()
+    },
+    teachTimeCal () {
+      // console.log(`${this.course.startDate} to ${this.course.endDate}`)
+      this.teachTime = `${this.course.startDate} to ${this.course.endDate}`
+      return `${this.course.startDate} to ${this.course.endDate}`
     }
   },
-  async mounted () {
+  async beforeMount () {
     const levels_ = await api.course.getLevel()
     this.levels = levels_.body
+  },
+  mounted () {
+    this.teachTime = `${this.course.startDate} to ${this.course.endDate}`
   },
   components: {
     Datepicker,
