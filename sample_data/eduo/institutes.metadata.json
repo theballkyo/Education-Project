@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"eduo.institutes"},{"v":2,"key":{"address.coordinates":"2dsphere"},"name":"address.coordinates_2dsphere","ns":"eduo.institutes","background":true,"2dsphereIndexVersion":3}]}
