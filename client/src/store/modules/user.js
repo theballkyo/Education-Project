@@ -1,11 +1,12 @@
 import * as types from '../mutation-types'
 import { user } from '../storageHelper'
 import api from '@/api/'
-// import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode'
 
 const state = {
   profile: user.profile || {},
   token: user.token || null,
+  tokenDecoded: user.tokenDecoded || null,
   lastUpdate: user.lastUpdate,
   isLoginRequest: false,
   isLoggedIn: user.isLoggedIn || false,
@@ -14,15 +15,22 @@ const state = {
 
 const getters = {
   isLoggedIn: state => state.isLoggedIn,
-  isLoginRequest: state => state.isLoginRequest
+  isLoginRequest: state => state.isLoginRequest,
+  canManage: state => {
+    if (!state.isLoggedIn) {
+      return false
+    }
+    return state.profile.role === 'admin'
+  },
+  getToken: state => state.token
 }
 
 const actions = {
   async loginRequest ({ commit, state }, credentials) {
     commit(types.LOGIN_REQUEST)
     try {
-      const rawData = await api.auth.authenticate(credentials)
-      const body = rawData.body
+      const res_ = await api.auth.authenticate(credentials)
+      const body = res_.body
       if (body.error) {
         commit(types.LOGIN_FAILED, body.error)
       } else {
@@ -49,8 +57,10 @@ const actions = {
 
 const mutations = {
   [types.LOGIN_USER] (state, {token, profile}) {
+    const decoded = jwtDecode(token)
     state.profile = profile
     state.token = token
+    state.tokenDecoded = decoded
     state.isLoggedIn = true
   },
   [types.LOGOUT_USER] (state) {

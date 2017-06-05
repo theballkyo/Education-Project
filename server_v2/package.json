@@ -1,0 +1,48 @@
+{
+  "name": "eduocation-project",
+  "version": "2.0.0",
+  "scripts": {
+    "dev": "./node_modules/.bin/nodemon src/server.js",
+    "koa": "./node_modules/.bin/runkoa bin/www",
+    "pm2": "pm2 start bin/run ",
+    "test": "./node_modules/.bin/mocha -u bdd",
+    "lint": "./node_modules/.bin/eslint 'src/**/*.js'"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "dotenv": "^4.0.0",
+    "eslint": "^3.19.0",
+    "hashids": "^1.1.1",
+    "joi": "^10.5.2",
+    "jsonwebtoken": "^7.4.1",
+    "kcors": "^2.2.1",
+    "koa-adapter": "^0.0.3",
+    "koa-body": "^2.0.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compress": "^2.0.0",
+    "koa-etag": "^3.0.0",
+    "koa-json": "^2.0.2",
+    "koa-jwt": "^3.2.2",
+    "koa-router": "^7.1.1",
+    "koa-static": "^3.0.0",
+    "mongoose": "^4.10.4",
+    "mongoose-auto-increment": "^5.0.1",
+    "mongoose-data-tree": "^2.0.2",
+    "mongoose-sequence": "^3.2.0",
+    "mongoose-timestamp": "^0.6.0",
+    "nodemon": "^1.11.0",
+    "pem": "^1.9.4",
+    "spdy": "^3.4.4",
+    "thenify-all": "^1.6.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "nodemon": "^1.11.0"
+  }
+}

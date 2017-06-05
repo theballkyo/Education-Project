@@ -13,7 +13,9 @@
       <div class="column is-12" v-if="showSearchBox">
         <SearchBox @onSearch="onSearchBoxSearch"></SearchBox>
       </div>
-      <div class="column is-12"><h3 class="title is-3">พบคอร์สเรียน {{ count }} รายการ จากคำค้นหา {{ filters.subject ? `ชื่อคอร์ส ${filters.subject}` : '' }}{{ filters.level ? ` ระดับชั้น ${filters.level}` : '' }}{{ filters.institute ? ` สถาบัน ${filters.institute}` : '' }}{{ filters.price ? ` ราคาไม่เกิน ${filters.price} บาท` : '' }}</h3>
+      <div class="column is-12">
+        <h3 class="title is-3">พบคอร์สเรียน {{ count }} รายการ จากคำค้นหา</h3>
+        <span v-for="text in searchInfo" class="tag is-black search-info">{{text}}</span>
       </div>
       <div class="column is-12">
         <Pagination :total="count" :perPage="limit" :currentPage="page" @changePage="changePage"></Pagination>
@@ -87,14 +89,6 @@ export default {
         this.filters.sortBy = 'price.-1'
       }
       this.refresh()
-      // this.fetchCourse()
-      // this.courses.sort((a, b) => {
-      //   if (this.sort.price === 'asc') {
-      //     return a.price - b.price
-      //   } else {
-      //     return b.price - a.price
-      //   }
-      // })
     },
     toggleSearchBox () {
       this.showSearchBox = !this.showSearchBox
@@ -125,6 +119,20 @@ export default {
   computed: {
     totalPage () {
       return Math.ceil(this.count / this.filters.limit) || 0
+    },
+    searchInfo () {
+      let info = []
+      if (this.filters.subject) {
+        info.push(`ชื่อคอร์ส ${this.filters.subject}`)
+      }
+      if (this.filters.level) {
+        info.push(`ระดับชั้น ${this.filters.level}`)
+      }
+      if (this.filters.institute) {
+        info.push(`สถาบัน ${this.filters.institute}`)
+      }
+      info.push(`ราคา ${this.filters.priceMin} - ${this.filters.priceMax} บาท`)
+      return info
     }
   },
   watch: {
@@ -151,19 +159,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.search-info {
+  clear: both;
+}
 .search-result {
   .main-block {
     background-color: #c0c0c0;
-  }
-}
-.pagination-link {
-  background-color: #000;
-  &:hover {
-    color: #fff;
-  }
-  &.is-current {
-    background-color: #696969;
   }
 }
 </style>

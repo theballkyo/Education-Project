@@ -8,9 +8,9 @@
           <div class="columns">
             <div class="column">
               <figure class="image">
-                  <ImageSlider :count="list.length" :interval="3000">
-                    <div v-for="img in list" class="slider" :style="`width: ${ 100 / list.length }%;`">
-                      <img :src="img">
+                  <ImageSlider :count="course.images.length" :interval="3000">
+                    <div v-for="img in course.images" class="slider" :style="`width: ${ 100 / course.images.length }%;`">
+                      <img :src="imageServer + 'images/' + img">
                     </div>
                   </ImageSlider>
               </figure>
@@ -45,7 +45,7 @@
         <div class="column">
           <div class="course-info content">
             <h1 class="title">ชื่อคอร์ส <small>{{ course.name }}</small></h1>
-            <h1 class="title">ชื่อสถาบันที่สอน <small>{{ course.institute.name }}</small></h1>
+            <h1 class="title">ชื่อสถาบันที่สอน <small>{{ course.institute.name || '' }}</small></h1>
             <p>
               <div class="columns">
                 <div class="column">
@@ -78,7 +78,7 @@
             <h1>คอร์สที่คล้ายกัน</h1>
             <div class="" v-for="i in 3">
               <h2>ชื่อคอร์ส {{ course.name }}</h2>
-              <h3>ชื่อสถาบันที่สอน {{ course.institute.name }}</h3>
+              <h3>ชื่อสถาบันที่สอน {{ course.institute.name || '' }}</h3>
               <p>
                 <div class="columns">
                   <div class="column">
@@ -109,6 +109,7 @@ import FooterBox from '../FooterBox.vue'
 import Loading from '../Loading.vue'
 import ImageSlider from '../image/Slider.vue'
 import Star from '../Star.vue'
+import { IMAGE_SERVER } from '@/config/'
 
 export default {
   name: 'courseDetail',
@@ -117,6 +118,7 @@ export default {
       course: {},
       errors: {},
       isLoading: true,
+      imageServer: IMAGE_SERVER,
       showImg: 'https://dummyimage.com/1024x768/252525/fff&text=1',
       list: ['https://dummyimage.com/1024x768/252525/fff&text=1', 'https://dummyimage.com/1024x768/252525/fff&text=2', 'https://dummyimage.com/1024x768/252525/fff&text=3', 'https://dummyimage.com/1024x768/252525/fff&text=4', 'https://dummyimage.com/1024x768/252525/fff&text=5', 'https://dummyimage.com/1024x768/252525/fff&text=6']
     }
@@ -135,7 +137,7 @@ export default {
       this.course.reviews.forEach((review) => {
         total += review.rating
       })
-      return total / this.course.reviews.length
+      return (total / this.course.reviews.length) || 0.0
     }
   },
   filters: {
@@ -144,10 +146,11 @@ export default {
       return dateObj.toDateString()
     }
   },
-  async mounted () {
+  async beforeMount () {
     try {
       const course_ = await api.course.getCourseById(this.$route.params.id)
       this.course = course_.body
+      // console.log(this.course.name)
     } catch (e) {
       this.errors = e
     }

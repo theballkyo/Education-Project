@@ -13,8 +13,9 @@ import { CourseResource } from './resource'
  * Object  filter => filter course "key" => value
  * @param Object option
  */
-const getCourses = ({page, filters = {}} = {}) => {
-  return CourseResource.get({ page, ...filters })
+const getCourses = ({filters = {}} = {}) => {
+  // const filtersEncode = JSON.stringify(filters)
+  return CourseResource.get({ ...filters })
 }
 
 /**
@@ -26,13 +27,31 @@ const getCourseById = id => {
 }
 
 /**
+ * Save a course
+ * @param FormData formData
+ */
+const save = formData => {
+  return CourseResource.save(formData)
+}
+
+/**
  * Get all levels in course
  */
-const getLevels = () => {
-  return CourseResource.get({ id: 'level' })
+const searchHelper = () => {
+  return CourseResource.get({ id: 'searchhelper' })
 }
+
+/**
+ * Get a levels
+ */
+const getLevel = () => {
+  return CourseResource.get({ id: 'levels' })
+}
+
 export default {
   getCourses,
   getCourseById,
-  getLevels
+  searchHelper,
+  save,
+  getLevel
 }

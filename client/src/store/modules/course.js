@@ -55,7 +55,7 @@ const mutations = {
   },
   [types.REMOVE_COURSE] (state, id) {
     state.all.filter((course) => {
-      course.id !== id
+      // course.id !== id
     })
   },
   [types.RECEIVE_COURSE] (state, courses) {

@@ -1,6 +1,6 @@
 <template>
 <div class="course-card card">
-  <div class="card--subject">ระดับชั้น {{ course.level }}</div>
+  <div class="card--subject">ระดับชั้น {{ course.level.name }}</div>
   <div class="card-content">
     <div class="media">
       <div class="media-left">

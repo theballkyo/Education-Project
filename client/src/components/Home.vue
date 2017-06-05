@@ -6,7 +6,7 @@
     </div>
     <div v-if="onMounted" class="column">
       <div class="imageSlideBox">
-        <ImageSlider :count="imageList.length" :interval="3000">
+        <ImageSlider :count="imageList.length" :interval="5000">
           <div v-for="img in imageList" class="slider" :style="`width: ${ 100 / imageList.length }%;`">
             <img :src="img">
           </div>

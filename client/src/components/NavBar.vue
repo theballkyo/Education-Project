@@ -22,7 +22,18 @@
         </span>
       </button>
     </div>
-    <span class="welcome nav-item">Welcome {{ fullname }}</span>
+
+    <span v-if="isLoggedIn" class="welcome nav-item">Welcome {{ fullname }}</span>
+
+    <span class="nav-item" v-if="canManage === true">
+      <router-link to="/backend" class="button is-primary">
+        <span class="icon">
+          <i class="fa fa-sign-in"></i>
+        </span>
+        <span>หน้าจัดการ</span>
+      </router-link>
+    </span>
+
     <span class="nav-item">
       <router-link to="/login" class="button is-primary" v-if="!isLoggedIn">
         <span class="icon">
@@ -37,12 +48,13 @@
         <span>Logout</span>
       </router-link>
     </span>
+
   </div>
 </nav>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 export default {
   name: 'navbar',
   data () {
@@ -51,8 +63,9 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', [
-      'isLoggedIn'
+    ...mapGetters('user', [
+      'isLoggedIn',
+      'canManage'
     ]),
     ...mapState('user', {
       fullname (state) {

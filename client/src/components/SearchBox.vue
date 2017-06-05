@@ -193,13 +193,13 @@ export default {
     }
   },
   async beforeCreate () {
-    const levelRaw = await api.course.getLevels()
-    const instituteRaw = await api.institute.getList()
-    this.levels = levelRaw.body
-    this.institutes = instituteRaw.body
+    const datas_ = await api.course.searchHelper()
+    const body = datas_.body
+    this.levels = body.levels
+    this.institutes = body.institutes
   },
   destroyed () {
-    console.log('destroyed')
+    // console.log('destroyed')
   },
   components: {
     vueSlider
@@ -230,6 +230,10 @@ form {
 .title {
   color: #fff;
   padding: 25px 40px 0 40px;
+}
+.tag {
+  margin-bottom: 10px;
+  margin-right: 5px;
 }
 .tags-input {
   position: absolute;

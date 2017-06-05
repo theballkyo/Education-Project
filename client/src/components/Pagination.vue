@@ -81,4 +81,13 @@ export default {
 .pagination-next[disabled]:hover {
   color: #232323;
 }
+.pagination-link {
+  background-color: #000;
+  &:hover {
+    color: #fff;
+  }
+  &.is-current {
+    background-color: #696969;
+  }
+}
 </style>

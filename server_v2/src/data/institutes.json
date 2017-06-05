@@ -1,0 +1,136 @@
+[{
+  "name": "Gigaclub",
+  "coverImage": "http://dummyimage.com/228x239.png/5fa2dd/ffffff",
+  "address": {
+    "coordinates": [
+      150,
+      42
+    ],
+    "line1": "2 Dahle Lane",
+    "line2": "Randy",
+    "city": "Nan’an",
+    "country": "China"
+  }
+}, {
+  "name": "Edgepulse",
+  "coverImage": "http://dummyimage.com/167x168.png/dddddd/000000",
+  "address": {
+    "coordinates": [
+      42,
+      36
+    ],
+    "line1": "8947 Nelson Terrace",
+    "line2": "Morrow",
+    "city": "Týn nad Vltavou",
+    "country": "Czech Republic",
+    "postalCode": "375 01"
+  }
+}, {
+  "name": "Fivebridge",
+  "coverImage": "http://dummyimage.com/194x235.jpg/ff4444/ffffff",
+  "address": {
+    "coordinates": [
+      159,
+      41
+    ],
+    "line1": "3966 Chive Junction",
+    "line2": "Bay",
+    "city": "Wudui",
+    "country": "China"
+  }
+}, {
+  "name": "Riffpath",
+  "coverImage": "http://dummyimage.com/139x185.jpg/cc0000/ffffff",
+  "address": {
+    "coordinates": [
+      138,
+      14
+    ],
+    "line1": "4036 Cardinal Place",
+    "line2": "Canary",
+    "city": "Shentong",
+    "country": "China"
+  }
+}, {
+  "name": "Jatri",
+  "coverImage": "http://dummyimage.com/250x249.jpg/5fa2dd/ffffff",
+  "address": {
+    "coordinates": [
+      28,
+      37
+    ],
+    "line1": "4 Gateway Circle",
+    "line2": "Knutson",
+    "city": "Rana",
+    "country": "Portugal",
+    "postalCode": "2775-389"
+  }
+}, {
+  "name": "Pixonyx",
+  "coverImage": "http://dummyimage.com/222x163.jpg/ff4444/ffffff",
+  "address": {
+    "coordinates": [
+      180,
+      13
+    ],
+    "line1": "2 Loomis Lane",
+    "line2": "Randy",
+    "city": "San Miguel",
+    "country": "Philippines",
+    "postalCode": "8301"
+  }
+}, {
+  "name": "Lazzy",
+  "coverImage": "http://dummyimage.com/156x236.png/5fa2dd/ffffff",
+  "address": {
+    "coordinates": [
+      64,
+      48
+    ],
+    "line1": "6239 Fairview Parkway",
+    "line2": "Debra",
+    "city": "Port-Cartier",
+    "country": "Canada",
+    "postalCode": "G5B"
+  }
+}, {
+  "name": "Roomm",
+  "coverImage": "http://dummyimage.com/161x181.bmp/dddddd/000000",
+  "address": {
+    "coordinates": [
+      118,
+      75
+    ],
+    "line1": "818 Sullivan Crossing",
+    "line2": "Briar Crest",
+    "city": "Al Ya‘rubīyah",
+    "country": "Syria"
+  }
+}, {
+  "name": "Shuffletag",
+  "coverImage": "http://dummyimage.com/199x148.bmp/dddddd/000000",
+  "address": {
+    "coordinates": [
+      108,
+      62
+    ],
+    "line1": "43692 Bartillon Drive",
+    "line2": "Coleman",
+    "city": "Bodø",
+    "country": "Norway",
+    "postalCode": "8010"
+  }
+}, {
+  "name": "Bubblebox",
+  "coverImage": "http://dummyimage.com/159x167.jpg/cc0000/ffffff",
+  "address": {
+    "coordinates": [
+      74,
+      14
+    ],
+    "line1": "4 Vera Junction",
+    "line2": "Cascade",
+    "city": "Jiangdianzi",
+    "country": "China"
+  }
+}]

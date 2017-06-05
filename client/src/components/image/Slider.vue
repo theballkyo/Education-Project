@@ -14,7 +14,8 @@ export default {
   name: 'imageSlider',
   data () {
     return {
-      current: 0
+      current: 0,
+      loop: null
     }
   },
   props: ['count', 'interval'],
@@ -37,9 +38,12 @@ export default {
   mounted () {
     let $sliders = this.$refs.sliders
     $sliders.style.width = (this.count * 100) + '%'
-    // setInterval(() => {
-    //   this.goto('next')
-    // }, this.interval)
+    this.loop = setInterval(() => {
+      this.goto('next')
+    }, this.interval)
+  },
+  destroyed () {
+    clearInterval(this.loop)
   }
 }
 </script>

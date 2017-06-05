@@ -10,8 +10,15 @@ import User from '@/components/User'
 import UserHome from '@/components/UserHome'
 import SearchResult from '@/components/SearchResult'
 import ReviewReport from '@/components/review/Report'
+import CourseCreate from '@/components/backend/course/Create'
+import CourseEdit from '@/components/backend/course/Edit'
+import CourseList from '@/components/backend/course/List'
+import Backend from '@/components/backend/Backend'
+import BackendHome from '@/components/backend/Home'
+import jwtDecode from 'jwt-decode'
 
-// import * as guard from './guard'
+import store from '@/store/'
+import guard from './guard'
 
 Vue.use(Router)
 
@@ -32,6 +39,32 @@ const router = new Router({
           path: '/login',
           name: 'Login',
           component: Login
+        },
+        // Backend section
+        {
+          path: '/backend',
+          component: Backend,
+          beforeEnter: guard.canManage,
+          children: [
+            {
+              path: '',
+              component: BackendHome
+            },
+            {
+              name: 'backend/course/list',
+              path: 'course/list',
+              component: CourseList
+            },
+            {
+              path: 'course/create',
+              component: CourseCreate
+            },
+            {
+              path: 'course/edit/:id',
+              component: CourseEdit,
+              props: true
+            }
+          ]
         },
         {
           path: '/report/review/:id',
@@ -83,6 +116,16 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   window.scrollTo(0, 0)
+  // console.log(store)
+  if (store.getters['user/isLoggedIn']) {
+    const decoded = jwtDecode(store.getters['user/getToken'])
+    if (decoded.exp < Math.floor(Date.now() / 1000)) {
+      // Todo refresh Token
+      // But now, logout a user
+      store.dispatch('user/logoutRequest')
+      // console.log(store)
+    }
+  }
   next()
   // transition.next()
 })

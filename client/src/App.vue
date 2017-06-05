@@ -7,6 +7,9 @@ export default {
   name: 'app',
   created () {
     document.getElementsByClassName('loading')[0].remove()
+  },
+  beforeMount () {
+    // Todo.
   }
 }
 </script>

@@ -3,7 +3,6 @@ import VueResource from 'vue-resource'
 import store from '@/store/'
 import router from '@/router/'
 
-// import types from '@/store/mutation-types'
 import { API_ROOT } from '@/config'
 Vue.use(VueResource)
 
@@ -25,6 +24,6 @@ Vue.http.interceptors.push((request, next) => {
   })
 })
 
-export const AuthResource = Vue.resource(API_ROOT + 'login')
+export const AuthResource = Vue.resource(API_ROOT + 'user/login')
 export const CourseResource = Vue.resource(API_ROOT + 'course{/id}')
 export const ReviewResource = Vue.resource(API_ROOT + 'review{/id}')
