@@ -54,7 +54,7 @@ course.get('/', async (ctx, next) => {
     sort[sort_[0]] = parseInt(sort_[1])
   }
 
-  let select = 'name level institute promotionPrice price studyHour totalDay'
+  let select = 'name subject level institute promotionPrice price studyHour totalDay'
 
   const courses = await CourseService.search({page, limit, sort, filters, select})
   ctx.body = courses
