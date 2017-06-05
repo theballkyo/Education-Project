@@ -29,7 +29,7 @@ export default {
         if (res_.ok && res_.status === 200) {
           // Added a course
           swal('Added a course')
-          this.$route.push({ name: 'backend/course/list' })
+          this.$router.push({ name: 'backend/course/list' })
         }
       } catch (error) {
         console.log(error)
