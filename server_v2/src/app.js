@@ -14,7 +14,7 @@ const pathUtils = require('./utils/pathUtils')
 
 app.use(require('koa-etag')())
 app.use(json())
-console.log(path.join(__dirname, 'public'))
+// console.log(path.join(pathUtils.getRoot(), '../', 'storage', 'temp'))
 app.use(require('koa-static')(path.join(__dirname, 'public')))
 
 // Use Cors
@@ -31,7 +31,7 @@ app.use(koaBody({
   multipart: true,
   formidable: {
     maxFieldsSize: 10 * 1024 * 1024,
-    uploadDir: path.join(pathUtils.getRoot(), 'storages', 'temp')
+    uploadDir: path.join(pathUtils.getRoot(), '../', 'storage', 'temp')
   }
 }))
 
