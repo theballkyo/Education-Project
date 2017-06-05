@@ -386,6 +386,8 @@
 import Datepicker from 'vue-bulma-datepicker'
 import InputTag from 'vue-input-tag'
 import api from '@/api/'
+import dateFormat from 'dateformat'
+
 export default {
   name: 'form_course',
   data () {
@@ -465,17 +467,17 @@ export default {
       return this.levelList()
     },
     teachTimeCal () {
-      // console.log(`${this.course.startDate} to ${this.course.endDate}`)
-      this.teachTime = `${this.course.startDate} to ${this.course.endDate}`
-      return `${this.course.startDate} to ${this.course.endDate}`
+      const format = 'yyyy-mm-dd HH:MM'
+      console.log(this.course.startDate)
+      const start_ = dateFormat(this.course.startDate, format)
+      const end_ = dateFormat(this.course.endDate, format)
+      this.teachTime = `${start_} to ${end_}`
+      return `${start_} to ${end_}`
     }
   },
   async beforeMount () {
     const levels_ = await api.course.getLevel()
     this.levels = levels_.body
-  },
-  mounted () {
-    this.teachTime = `${this.course.startDate} to ${this.course.endDate}`
   },
   components: {
     Datepicker,
