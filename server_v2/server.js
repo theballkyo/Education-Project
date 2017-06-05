@@ -4,7 +4,7 @@ require('dotenv').config()
 // Load babel
 require('babel-register')
 
-const app = require('./app')
+const app = require('.src/app')
 // const thenifyAll = require('thenify-all')
 // const pem = thenifyAll(require('pem'))
 // const os = require('os')
