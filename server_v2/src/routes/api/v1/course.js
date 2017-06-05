@@ -61,6 +61,28 @@ course.get('/', async (ctx, next) => {
 })
 
 /**
+ * Get a courses is created by user
+ */
+course.get('/user/list', async ctx => {
+  // Check authentication
+  if (!ctx.state.user) {
+    ctx.throw('Access Denied', 401)
+  }
+  let page = 0
+  let limit = 1000
+  let sort = {
+    createdAt: 1
+  }
+  let filters = {
+    createBy: ctx.state.user.id
+  }
+  let select = 'name subject level createdAt updatedAt'
+
+  const courses = await CourseService.search({page, limit, sort, filters, select})
+  ctx.body = courses
+})
+
+/**
  * Search Helper
  */
 course.get('/searchhelper', async (ctx) => {
