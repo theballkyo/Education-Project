@@ -1,6 +1,6 @@
 <template>
   <div class="course-edit">
-    <form-course @onSubmit="onSubmit" title="แก้ไขข้อมูลคอร์ส" submitText="แก้ไข" :course="course"></form-course>
+    <FormCourse @onSubmit="onSubmit" title="แก้ไขข้อมูลคอร์ส" submitText="แก้ไข" :course="course" v-if="course"></FormCourse>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   name: 'backend_course_edit',
   data () {
     return {
-      course: {}
+      course: null
     }
   },
   props: {
@@ -25,9 +25,10 @@ export default {
       console.log(course)
     }
   },
-  async mounted () {
+  async created () {
     const res_ = await api.course.getCourseById(this.id)
     this.course = res_.body
+    this.course.level = this.course.level._id
   },
   components: {
     FormCourse
