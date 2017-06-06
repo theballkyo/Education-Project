@@ -24,10 +24,10 @@
       <div class="field-body">
         <div class="field is-grouped">
           <p class="control is-expanded has-icons-left">
-            
-            <input class="input" type="text" placeholder="ชื่อวิชา" v-model="course.subject">
-            <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
+            <span class="select is-fullwidth">
+              <select v-model="course.subject">
+                <option v-for="subject in subjectList" :value="subject">{{subject}}</option>
+              </select>
             </span>
           </p>
         </div>
@@ -395,6 +395,7 @@ export default {
       images: {},
       levels: [],
       selectLevel: [],
+      subjectList_: ['English', 'Math', 'Science', 'Computer', 'Art'],
       teachTime: ''
     }
   },
@@ -473,6 +474,9 @@ export default {
       const end_ = dateFormat(this.course.endDate, format)
       this.teachTime = `${start_} to ${end_}`
       return `${start_} to ${end_}`
+    },
+    subjectList () {
+      return this.subjectList_
     }
   },
   async beforeMount () {

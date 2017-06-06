@@ -29,16 +29,21 @@
                     </div>
                     <div class="column">
                       <div class="report has-text-right">
-                        <router-link :to="`/report/review/${review.id}`" class="">ร้องเรียนรีวิวนี้</router-link>
+                        <router-link :to="`/report/review/${review._id}`" class="">ร้องเรียนรีวิวนี้</router-link>
                         <a href=""></a>
                       </div>
                     </div>
                   </div>
-                  <p>{{ review.comment }}</p>
-                  <p>By {{ review.userId.firstName }} {{ review.userId.lastName }}</p>
+                  <p>{{ review.message }}</p>
+                  <p>By {{ review.name }}</p>
                   <hr>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <review-form @onSubmit="onReviewSubmit"></review-form>
             </div>
           </div>
         </div>
@@ -109,6 +114,9 @@ import FooterBox from '../FooterBox.vue'
 import Loading from '../Loading.vue'
 import ImageSlider from '../image/Slider.vue'
 import Star from '../Star.vue'
+import ReviewForm from '../review/Form.vue'
+import swal from 'sweetalert2'
+
 import { IMAGE_SERVER } from '@/config/'
 
 export default {
@@ -127,8 +135,19 @@ export default {
     'id'
   ],
   methods: {
-    slider (id) {
-      this.showImg = `https://dummyimage.com/1024x768/252525/fff&text=${id}`
+    async onReviewSubmit ({review}) {
+      let res_ = await api.course.addReview(this.id, review)
+      if (res_.ok) {
+        swal('ทำการโพสรีวิวเรียบร้อยแล้ว')
+      }
+      // Fetch new data
+      this.fetchData()
+    },
+    async fetchData () {
+      this.isLoading = true
+      const course_ = await api.course.getCourseById(this.$route.params.id)
+      this.course = course_.body
+      this.isLoading = false
     }
   },
   computed: {
@@ -148,20 +167,18 @@ export default {
   },
   async beforeMount () {
     try {
-      const course_ = await api.course.getCourseById(this.$route.params.id)
-      this.course = course_.body
-      // console.log(this.course.name)
+      this.fetchData()
     } catch (e) {
       this.errors = e
     }
-    this.isLoading = false
   },
   components: {
     NavBar,
     FooterBox,
     Loading,
     ImageSlider,
-    Star
+    Star,
+    ReviewForm
   }
 }
 </script>

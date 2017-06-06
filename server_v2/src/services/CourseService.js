@@ -9,13 +9,24 @@ const getAll = () => {
   return Course.find().exec()
 }
 
-const findOne = (id) => {
+const findOne = (id, select = '') => {
   return Course.findOne({ '_id': id }).populate('institute').populate({
     path: 'reviews',
     populate: {
       path: 'userId'
     }
-  }).populate('level').exec()
+  }).populate('level').select(select).exec()
+}
+
+const getReview = (id) => {
+  const course = Course.findOne({
+    reviews: {
+      $elemMatch: {
+        _id: id
+      }
+    }
+  }, { 'reviews.$': 1 }).select('reviews').exec()
+  return course
 }
 
 const search = async ({ page = 0, limit = 10, sort = { 'createdAt': -1 }, filters = {}, select = '' }) => {
@@ -69,10 +80,14 @@ const searchHelp = async () => {
   }
 }
 
+const update = course => {
+  return course.save()
+}
+
 const save = (data) => {
   // Todo.
   let course = new Course(data)
-  course.version = 1
+  // course.version = 1
   // {
     // name: data.name,
     // subject: data.subject,
@@ -85,6 +100,8 @@ module.exports = {
   getAll,
   findOne,
   search,
+  getReview,
   searchHelp,
+  update,
   save
 }

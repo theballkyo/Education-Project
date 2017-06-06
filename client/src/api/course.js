@@ -23,11 +23,39 @@ const getCourseById = id => {
 }
 
 /**
+ * Get course by ID for edit page
+ */
+const getCourseByIdForEdit = id => {
+  return http.get(API_ROOT + `course/${id}/edit`)
+}
+/**
  * Save a course
  * @param FormData formData
  */
 const save = formData => {
   return CourseResource.save(formData)
+}
+
+/**
+ * Update a course
+ */
+const update = (id, formData) => {
+  // console.log(formData)
+  return CourseResource.update({id}, formData)
+}
+
+/**
+ * Add review
+ */
+const addReview = (id, review) => {
+  return http.post(API_ROOT + `course/${id}/review`, review)
+}
+
+/**
+ * Get review
+ */
+const getReview = id => {
+  return http.get(API_ROOT + `course/${id}/review`)
 }
 
 /**
@@ -54,8 +82,12 @@ const getUserCourse = () => {
 export default {
   getCourses,
   getCourseById,
+  getCourseByIdForEdit,
   searchHelper,
   save,
+  update,
+  addReview,
+  getReview,
   getLevel,
   getUserCourse
 }

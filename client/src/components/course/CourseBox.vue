@@ -3,7 +3,7 @@
   <div class="notification tabs is-right title-bar">
     <h1 class="title">{{ title }}</h1>
     <ul>
-      <li :class="{ 'is-active': subject === 'Eng' }" @click="subjectChange('Eng')"><a>ภาษาอังกฤษ</a></li>
+      <li :class="{ 'is-active': subject === 'english' }" @click="subjectChange('english')"><a>ภาษาอังกฤษ</a></li>
       <li :class="{'is-active': subject === 'Math'}" @click="subjectChange('Math')"><a>คณิตศาสตร์</a></li>
       <li :class="{'is-active': subject === 'Sci'}" @click="subjectChange('Sci')"><a>วิทยาศาสตร์</a></li>
       <li :class="{'is-active': subject === 'Com'}" @click="subjectChange('Com')"><a>คอมพิวเตอร์</a></li>

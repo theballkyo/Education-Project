@@ -5,7 +5,7 @@
     <div class="media">
       <div class="media-left">
         <figure class="image is-128x128">
-          <img src="https://dummyimage.com/128x128/252525/fff" alt="Image">
+          <img :src="imageServer + 'images/' + course.coverImage" alt="Image">
         </figure>
       </div>
       <div class="media-content">
@@ -16,7 +16,7 @@
 
     <div class="content">
       <div class="has-text-right">
-        <div>{{ course.price }} บาท</div>
+        <div>{{ course.promotionPrice }} บาท</div>
         <div>{{ course.hourPerDay }} ชั่วโมง / ครั้ง</div>
       </div>
       <div class="columns button-menu">
@@ -32,8 +32,15 @@
 </div>
 </template>
 <script>
+import { IMAGE_SERVER } from '@/config/'
+
 export default {
   name: 'courseCard',
+  data () {
+    return {
+      imageServer: IMAGE_SERVER
+    }
+  },
   props: {
     course: {
       type: Object,
@@ -41,7 +48,7 @@ export default {
         _id: '1',
         institute: [{name: 'Unknown'}],
         subject: 'Unknown',
-        price: 1000,
+        promotionPrice: 0,
         hour: 2
       }
     }

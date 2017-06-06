@@ -2,9 +2,9 @@
   <div class="container content report">
     <h1>รายงานคอมเม้นไม่เหมาะสม</h1>
     <blockquote v-if="review">
-      {{ review.comment }}
+      {{ review.message }}
       <br>
-      <b>โดย</b> {{ review.userId.firstName }} {{ review.userId.lastName }}
+      <b>โดย</b> {{ review.name }}
     </blockquote>
     <div class="field is-horizontal">
       <div class="field-label is-normal">
@@ -96,7 +96,7 @@ export default {
     }
   },
   async mounted () {
-    let response = await api.review.getById(this.id)
+    let response = await api.course.getReview(this.id)
     this.review = response.body
   },
   components: {

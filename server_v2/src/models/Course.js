@@ -130,10 +130,18 @@ const CourseSchema = new mongoose.Schema({
     required: true,
     ref: 'User'
   },
-  reviews: [{
-    type: ObjectId,
-    ref: 'Review'
-  }]
+  reviews: [
+    {
+      name: String,
+      email: String,
+      message: String,
+      rating: {
+        type: Number,
+        get: v => Math.round(v),
+        set: v => Math.round(v)
+      }
+    }
+  ]
 })
 
 CourseSchema.plugin(timestamps)
