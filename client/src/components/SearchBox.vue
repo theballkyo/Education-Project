@@ -96,7 +96,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import api from '@/api/'
 import vueSlider from 'vue-slider-component'
 
@@ -130,11 +130,17 @@ export default {
       institutes: [],
       // instituteSelect: [],
       showTagInput: false,
-      tagListFocus: false
+      tagListFocus: false,
+      course: {
+        subject: '',
+        level: [],
+        institute: [],
+        price: [2600, 5000]
+      }
     }
   },
   props: {
-    course: {
+    course_: {
       type: Object,
       default: function () {
         return {
@@ -192,14 +198,22 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters('search', {
+      searchCourse: 'course'
+    })
+  },
   async beforeCreate () {
     const datas_ = await api.course.searchHelper()
     const body = datas_.body
     this.levels = body.levels
     this.institutes = body.institutes
+
+    // Set course data from prevent search
+    this.course = JSON.parse(JSON.stringify(this.searchCourse))
   },
-  destroyed () {
-    // console.log('destroyed')
+  beforeDestroy () {
+    this.searchCourseSettings({...this.course})
   },
   components: {
     vueSlider

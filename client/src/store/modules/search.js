@@ -3,13 +3,17 @@ import * as types from '../mutation-types'
 const state = {
   course: {
     subject: '',
-    level: '',
-    institution: '',
+    level: [],
+    institute: [],
     price: [
-      500,
-      1000
+      0,
+      10000
     ]
   }
+}
+
+const getters = {
+  course: state => state.course
 }
 
 const actions = {
@@ -30,6 +34,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
+  getters,
   actions,
   mutations
 }
