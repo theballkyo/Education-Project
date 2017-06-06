@@ -7,3 +7,5 @@
 
 npm-debug.log.**
 client/yarn\.lock
+
+server_v2/src/public/images/
