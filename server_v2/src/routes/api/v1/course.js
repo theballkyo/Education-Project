@@ -162,12 +162,13 @@ course.post('/', async (ctx) => {
   if (!ctx.state.user) {
     ctx.throw('Access Denied', 401)
   }
+
   const fields = ctx.request.body.fields
   let course = JSON.parse(fields.course)
   course.createBy = ctx.state.user.id
 
   // Dummy institute
-  course.institute = '590cafb108873a5004dd9576'
+  // course.institute = '590cafb108873a5004dd9576'
 
   // Save a course
   course = await CourseService.save(course)
