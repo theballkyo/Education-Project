@@ -70,7 +70,7 @@
               <div class="text-header">รอบเรียน</div> {{ course.startDate | formatDate }} - {{ course.endDate | formatDate }}</p>
             <p>
               <div class="text-header">สถานที่</div>
-              {{ course.address.line1 }} {{ course.address.line2 }} {{ course.address.city }} {{ course.address.country }}
+              {{ course.address.line }}
             </p>
             <p>
               <div class="text-header">โปรโมชั่น</div> {{ course.promotionPrice }}</p>

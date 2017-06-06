@@ -1,6 +1,7 @@
 <template>
   <div v-if="course && course.address" class="content">
     <h1>{{ title }}</h1>
+
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">ชื่อคอร์สเรียน</label>
@@ -9,6 +10,22 @@
         <div class="field is-grouped">
           <p class="control is-expanded has-icons-left">
             <input class="input" type="text" placeholder="ชื่อคอร์สเรียน" v-model="course.name">
+            <span class="icon is-small is-left">
+              <i class="fa fa-user"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">ชื่อสถาบัน</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-grouped">
+          <p class="control is-expanded has-icons-left">
+            <input class="input" type="text" placeholder="ชื่อสถาบัน" v-model="course.institute">
             <span class="icon is-small is-left">
               <i class="fa fa-user"></i>
             </span>
@@ -90,7 +107,7 @@
           <p class="control is-expanded has-icons-left">
             <input class="input" type="text" placeholder="ราคา" v-model="course.price">
             <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-usd"></i>
             </span>
           </p>
         </div>
@@ -104,9 +121,9 @@
       <div class="field-body">
         <div class="field is-grouped">
           <p class="control is-expanded has-icons-left">
-            <input class="input" type="text" placeholder="ราคา" v-model="course.promotionPrice">
+            <input class="input" type="text" placeholder="ราคาโปรโมชั่น" v-model="course.promotionPrice">
             <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-usd"></i>
             </span>
           </p>
         </div>
@@ -122,7 +139,7 @@
           <p class="control is-expanded has-icons-left">
             <input class="input" type="text" placeholder="อีเมล์สำหรับติดต่อ" v-model="course.email">
             <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-envelope"></i>
             </span>
           </p>
         </div>
@@ -138,7 +155,7 @@
           <p class="control is-expanded has-icons-left">
             <input class="input" type="text" placeholder="เบอร์โทร" v-model="course.phone">
             <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-phone"></i>
             </span>
           </p>
         </div>
@@ -154,7 +171,7 @@
           <p class="control is-expanded has-icons-left">
             <input class="input" type="text" placeholder="เว็บไซต์" v-model="course.website">
             <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-chrome"></i>
             </span>
           </p>
         </div>
@@ -180,44 +197,20 @@
       </div>
       <div class="field-body">
         <div class="field">
-          <p class="control is-expanded has-icons-left has-icons-right">
-            <datepicker :config="{ wrap: true, mode: 'range', enableTime: true }" placeholder="ระยะเวลาที่สอน" readonly v-model="teachTime" :value="teachTimeCal">
+          <p class="control has-icons-left has-icons-right">
+            <datepicker :config="{ wrap: true, enableTime: true }" placeholder="เริ่มสอน" readonly v-model="course.startDate">
             </datepicker>
-            <!--<input class="input" type="text" placeholder="สิ้นสุด" v-model="course.endDate">
             <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>-->
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">จำนวนชั่วโมงเรียนต่อวัน</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-grouped">
-          <p class="control is-expanded has-icons-left">
-            <input class="input" type="text" placeholder="จำนวนชั่วโมงเรียนต่อวัน" v-model="course.hourPerDay">
-            <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-calendar"></i>
             </span>
           </p>
         </div>
-      </div>
-    </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">จำนวนวันที่เรียน</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-grouped">
-          <p class="control is-expanded has-icons-left">
-            <input class="input" type="text" placeholder="จำนวนวันที่เรียน" v-model="course.totalDay">
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <datepicker :config="{ wrap: true, enableTime: true }" placeholder="สิ้นสุด" readonly v-model="course.endDate">
+            </datepicker>
             <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-calendar"></i>
             </span>
           </p>
         </div>
@@ -256,10 +249,42 @@
               วันเสาร์
             </label>
             <label class="checkbox">
-              <input type="checkbox" value="7" v-model="course.dayOfWeek">
+              <input type="checkbox" value="0" v-model="course.dayOfWeek">
               วันอาทิตย์
             </label>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">จำนวนชั่วโมงเรียนต่อวัน</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-grouped">
+          <p class="control is-expanded has-icons-left">
+            <input class="input" type="text" placeholder="จำนวนชั่วโมงเรียนต่อวัน" :value="hourPerDayCal" disabled>
+            <span class="icon is-small is-left">
+              <i class="fa fa-clock-o"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">จำนวนวันที่เรียน</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-grouped">
+          <p class="control is-expanded has-icons-left">
+            <input class="input" type="text" placeholder="จำนวนวันที่เรียน" :value="totalDayCal" disabled>
+            <span class="icon is-small is-left">
+              <i class="fa fa-sun-o"></i>
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -386,7 +411,7 @@
 import Datepicker from 'vue-bulma-datepicker'
 import InputTag from 'vue-input-tag'
 import api from '@/api/'
-import dateFormat from 'dateformat'
+// import dateFormat from 'dateformat'
 
 export default {
   name: 'form_course',
@@ -405,6 +430,7 @@ export default {
       default () {
         return {
           name: '',
+          institute: '',
           subject: '',
           level: '',
           description: '',
@@ -467,13 +493,48 @@ export default {
     selectLevelComputed () {
       return this.levelList()
     },
-    teachTimeCal () {
-      const format = 'yyyy-mm-dd HH:MM'
-      console.log(this.course.startDate)
-      const start_ = dateFormat(this.course.startDate, format)
-      const end_ = dateFormat(this.course.endDate, format)
-      this.teachTime = `${start_} to ${end_}`
-      return `${start_} to ${end_}`
+    hourPerDayCal () {
+      const start = new Date(this.course.startDate)
+      const end = new Date(this.course.endDate)
+      let range = end.getHours() - start.getHours()
+      if (start.getMinutes() <= end.getMinutes()) {
+        let diff = end.getMinutes() - start.getMinutes()
+        diff = (diff / 100)
+        range += diff
+      } else {
+        let diff = start.getMinutes() - end.getMinutes()
+        diff = (0.6 - (diff / 100))
+        console.log(diff.toFixed(2))
+        range += diff
+        // minus 1 hour
+        range -= 1
+      }
+      range = range.toFixed(2)
+      this.course.hourPerDay = parseFloat(range)
+      return range
+    },
+    totalDayCal () {
+      // const oneDay = 1000 * 60 * 60 * 24
+      const start = new Date(this.course.startDate)
+      const end = new Date(this.course.endDate)
+      // let diff = end.getTime() - start.getTime()
+      // diff = Math.round(diff / oneDay)
+      // Sun day is 0
+      let start_ = start
+      let diff = 0
+      let dayOfWeekInt = this.course.dayOfWeek.map(v => parseInt(v))
+      while (start_ <= end) {
+        let date = new Date(start_)
+        let day = date.getDay()
+        if (dayOfWeekInt.indexOf(day) > -1) {
+          diff += 1
+        }
+        start_ = date.setDate(date.getDate() + 1)
+      }
+
+      // Set value
+      this.course.totalDay = diff
+      return diff
     },
     subjectList () {
       return this.subjectList_
