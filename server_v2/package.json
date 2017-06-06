@@ -22,7 +22,6 @@
     "koa": "^2.2.0",
     "koa-adapter": "^0.0.3",
     "koa-body": "^2.0.1",
-    "koa-bodyparser": "^4.2.0",
     "koa-compress": "^2.0.0",
     "koa-etag": "^3.0.0",
     "koa-json": "^2.0.2",
