@@ -271,6 +271,7 @@ form {
   &:hover {
     background-color: whitesmoke;
   }
+  padding-left: 10px;
 }
 .field.institute {
   position: relative;

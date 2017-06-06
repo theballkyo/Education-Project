@@ -1,6 +1,5 @@
 <template>
   <div class="review-form">
-    <rating :items="items" legend="" :value="review.rating" @change="update"></rating>
     <div class="field">
       <label class="label">Name</label>
       <p class="control">
@@ -23,6 +22,10 @@
       <p class="control">
         <textarea class="textarea" placeholder="ข้อความ" v-model="review.message"></textarea>
       </p>
+    </div>
+
+    <div class="field">
+      <rating :items="items" legend="" :value="review.rating" @change="update"></rating>
     </div>
 
     <div class="field is-grouped">
@@ -92,6 +95,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.image {
+  background-color: #fff;
+}
 .review-form {
   background-color: #fff;
   padding: 25px;
