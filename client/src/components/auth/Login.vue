@@ -40,7 +40,7 @@ export default {
   name: 'Login',
   data () {
     return {
-      email: 'faycarey@geekfarm.com',
+      email: 'admin@eduo.local',
       password: 'password'
     }
   },

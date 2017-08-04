@@ -23,12 +23,32 @@ export default {
   },
   methods: {
     async onSubmit ({course, images}) {
+      // Create form data
       let formData = new FormData()
-      formData.append('course', JSON.stringify(course))
       // Add images if exist
-      Object.entries(images).forEach(([key, value]) => {
-        formData.append(key, value[0])
-      })
+      let imageSlide = []
+      if (images.slide.length > 0) {
+        for (const image of images.slide) {
+          if (image.isNew) {
+            formData.append('imageSlide', image.file)
+          }
+          imageSlide.push({
+            isNew: image.isNew,
+            name: image.name
+          })
+        }
+      }
+
+      // If change cover image
+      if (images.cover) {
+        console.log(images.cover)
+        formData.append('cover', images.cover[0])
+      }
+
+      // Set course image slide
+      course.imageSlide = imageSlide
+      formData.append('course', JSON.stringify(course))
+      console.log(formData.get('course'))
       try {
         let res_ = await api.course.update(this.id, formData)
         if (res_.ok && res_.status === 200) {
@@ -44,7 +64,7 @@ export default {
         })
       }
 
-      // console.log(course)
+      console.log(course)
     }
   },
   async created () {

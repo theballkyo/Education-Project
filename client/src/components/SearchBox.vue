@@ -5,12 +5,12 @@
     <form @keydown.enter.prevent="onSearch" class="search">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
-          <label class="label">วิชา</label>
+          <label class="label">ชื่อคอร์ส/วิชา</label>
         </div>
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <input class="input" type="text" v-model="course.subject" placeholder="ชื่อวิชา">
+              <input class="input" type="text" v-model="course.subject" placeholder="ชื่อคอร์สหรือวิชาที่ต้องการค้นหา">
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@
               <span v-for="institute in course.institute" class="tag is-black">{{ institute }} <button @click="removeInstitute(institute)" class="delete is-small"></button></span>
               <input @blur="onBlur" @click="onClick" class="input" type="text" ref="institute" placeholder="ชื่อสถาบัน">
               <div @mouseover="onHover" @mouseleave="onMouseleave" v-show="showTagInput || tagListFocus" class="tags-input">
-                <div for="institute" v-for="institute in institutes.filter(ins => course.institute.indexOf(ins) < 0)" class="tags-input--data" @click="onInstituteClick(institute)">{{ institute }}</div>
+                <div v-if="institutes != undefined" for="institute" v-for="institute in institutes.filter(ins => course.institute.indexOf(ins) < 0)" class="tags-input--data" @click="onInstituteClick(institute)">{{ institute }}</div>
               </div>
               <!--<div class="pretty success smooth" v-for="institute in institutes">
                 <input type="checkbox" v-model="course.institute" :value="institute"> 
@@ -206,9 +206,10 @@ export default {
   async beforeCreate () {
     const datas_ = await api.course.searchHelper()
     const body = datas_.body
-    this.levels = body.levels
-    this.institutes = body.institutes
-
+    if (body) {
+      this.levels = body.levels
+      this.institutes = body.institutes
+    }
     // Set course data from prevent search
     this.course = JSON.parse(JSON.stringify(this.searchCourse))
   },

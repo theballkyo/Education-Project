@@ -13,6 +13,7 @@ import ReviewReport from '@/components/review/Report'
 import CourseCreate from '@/components/backend/course/Create'
 import CourseEdit from '@/components/backend/course/Edit'
 import CourseList from '@/components/backend/course/List'
+import ReportList from '@/components/backend/report/List'
 import Backend from '@/components/backend/Backend'
 import BackendHome from '@/components/backend/Home'
 import jwtDecode from 'jwt-decode'
@@ -63,6 +64,10 @@ const router = new Router({
               path: 'course/edit/:id',
               component: CourseEdit,
               props: true
+            },
+            {
+              path: 'report/list',
+              component: ReportList
             }
           ]
         },

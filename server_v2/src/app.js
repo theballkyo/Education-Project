@@ -6,6 +6,7 @@ const koaBody = require('koa-body')
 // const adapt = require('koa-adapter')
 const json = require('koa-json')
 const jwt = require('koa-jwt')
+const fs = require('fs-extra')
 // const router = require('koa-router')()
 const cors = require('kcors')
 // const os = require('os')
@@ -35,11 +36,50 @@ app.use(koaBody({
   }
 }))
 
+/**
+ * Remove files in temp folder before next
+ */
+app.use(async (ctx, next) => {
+  await next()
+  if (ctx.request.body.files) {
+    const files = ctx.request.body.files
+    if (files) {
+      Object.keys(files).map(async (key, index) => {
+        if (files[key] != null) {
+          // If multiple files
+          if (Array.isArray(files[key])) {
+            files[key].forEach(async file => {
+              const exists = await fs.pathExists(file.path)
+              if (exists) {
+                try {
+                  await fs.remove(file.path)
+                } catch (e) {
+                  console.log(e)
+                }
+              }
+            })
+          } else {
+            const exists = await fs.pathExists(files[key].path)
+            if (exists) {
+              try {
+                await fs.remove(files[key].path)
+              } catch (e) {
+                console.log(e)
+              }
+            }
+          }
+        }
+      })
+    }
+  }
+})
+
 // Error handlers
 app.use(async (ctx, next) => {
   try {
     await next()
   } catch (err) {
+    console.log(err)
     // will only respond with JSON
     const errCode = err.statusCode || err.status || 500
     ctx.status = errCode

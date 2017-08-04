@@ -320,7 +320,7 @@
       <div class="field-body">
         <div class="field is-grouped">
           <p class="control is-expanded has-icons-left">
-            <input class="input" type="file" placeholder="รูปภาพ Cover" @change="onImageChange($event, 'cover')">
+            <input class="input" type="file" placeholder="รูปภาพ Cover" @change="onImageChange($event)">
             <span class="icon is-small is-left">
               <i class="fa fa-user"></i>
             </span>
@@ -331,60 +331,29 @@
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label">รูปภาพ Slide รูปที่ 1</label>
+        <label class="label">Slide image</label>
       </div>
       <div class="field-body">
-        <div class="field is-grouped">
-          <p class="control is-expanded has-icons-left">
-            <input class="input" type="file" placeholder="รูปภาพ Slide รูปที่ 1" @change="onImageChange($event, 'slide1')">
-            <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">รูปภาพ Slide รูปที่ 2</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-grouped">
-          <p class="control is-expanded has-icons-left">
-            <input class="input" type="file" placeholder="รูปภาพ Slide รูปที่ 2" @change="onImageChange($event, 'slide2')">
-            <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">รูปภาพ Slide รูปที่ 3</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-grouped">
-          <p class="control is-expanded has-icons-left">
-            <input class="input" type="file" placeholder="รูปภาพ Slide รูปที่ 3" @change="onImageChange($event, 'slide3')">
-            <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">รูปภาพ Slide รูปที่ 4</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-grouped">
-          <p class="control is-expanded has-icons-left">
-            <input class="input" type="file" placeholder="รูปภาพ Slide รูปที่ 4" @change="onImageChange($event, 'slide4')">
-            <span class="icon is-small is-left">
-              <i class="fa fa-user"></i>
-            </span>
+        <div class="field" @dragover.prevent @drop="onFileDrop($event)" @dragover="onDragOver($event)">
+          <p class="drop control is-expanded has-icons-left">
+            <draggable class="images-box" v-model="images.slide" :options="{animation: 0}">
+              <transition-group type="transition" :name="'flip-list'" tag="div" class="columns is-multiline">
+                <div @click.prevent class="column is-one-quarter" v-for="(element, index) in images.slide" :key="index">
+                  <div class="card">
+                    <div class="card-image">
+                      <figure class="image">
+                        <img :src="element.data || `${imageServer}images/${element.name}`" alt="Image">
+                      </figure>
+                    </div>
+                    <footer class="card-footer">
+                      <a class="card-footer-item" @click="deleteImage(index)">Delete</a>
+                    </footer>
+                  </div>
+                </div>
+              </transition-group>
+            </draggable>
+            <span class="droptext" @click="onSlideClick">Drop files here or click me</span>
+            <input @change="onSlideChange" type="file" id="slide-img" style="display: none;" multiple/>
           </p>
         </div>
       </div>
@@ -392,7 +361,6 @@
 
     <div class="field is-horizontal">
       <div class="field-label">
-        <!-- Left empty for spacing -->
       </div>
       <div class="field-body">
         <div class="field">
@@ -410,14 +378,21 @@
 <script>
 import Datepicker from 'vue-bulma-datepicker'
 import InputTag from 'vue-input-tag'
+import draggable from 'vuedraggable'
 import api from '@/api/'
+import { IMAGE_SERVER } from '@/config/'
 // import dateFormat from 'dateformat'
 
 export default {
   name: 'form_course',
   data () {
     return {
-      images: {},
+      slideImages: [],
+      images: {
+        cover: null,
+        slide: []
+      },
+      imageServer: IMAGE_SERVER,
       levels: [],
       selectLevel: [],
       subjectList_: ['English', 'Math', 'Science', 'Computer', 'Art'],
@@ -438,6 +413,7 @@ export default {
           price: '',
           promotionPrice: '',
           email: '',
+          images: [],
           phone: '',
           website: '',
           dayOfWeek: [],
@@ -466,15 +442,10 @@ export default {
   },
   methods: {
     onSubmit (e) {
-      let time_ = this.teachTime.split(' to ')
-      this.course.startTime = time_[0]
-      this.course.endTime = time_[1]
-      this.course.startDate = time_[0]
-      this.course.endDate = time_[1]
       this.$emit('onSubmit', {course: this.course, images: this.images})
     },
-    onImageChange (e, id) {
-      this.images[id] = e.target.files
+    onImageChange (e) {
+      this.images.cover = e.target.files
     },
     levelList (levels = [], selectLevel = [], index = 0) {
       if (levels.length === 0) {
@@ -487,6 +458,45 @@ export default {
         }
       }
       return selectLevel
+    },
+    onFileDrop (e) {
+      e.stopPropagation()
+      e.preventDefault()
+      const files = e.target.files || e.dataTransfer.files
+      this.addFilesToSlideList(files)
+    },
+    onDragOver (e) {
+      // console.log(e)
+    },
+    onSlideClick (e) {
+      document.getElementById('slide-img').click()
+    },
+    onSlideChange (e) {
+      const files = e.target.files
+      this.addFilesToSlideList(files)
+    },
+    deleteImage (index) {
+      this.images.slide.splice(index, 1)
+    },
+    addFilesToSlideList (files) {
+      if (files.length < 1) {
+        return
+      }
+
+      for (let i = 0; i < files.length; i++) {
+        const fr = new FileReader()
+
+        fr.onload = () => {
+          let image = {
+            data: fr.result,
+            file: files[i],
+            isNew: true
+          }
+          this.images.slide.push(image)
+          console.log(image.file)
+        }
+        fr.readAsDataURL(files[i])
+      }
     }
   },
   computed: {
@@ -544,9 +554,35 @@ export default {
     const levels_ = await api.course.getLevel()
     this.levels = levels_.body
   },
+  mounted () {
+    for (const image of this.course.images) {
+      this.images.slide.push({
+        isNew: false,
+        name: image
+      })
+    }
+  },
   components: {
     Datepicker,
-    InputTag
+    InputTag,
+    draggable
   }
 }
 </script>
+
+<style scoped>
+.drop {
+  text-align: center;
+  padding: 50px;
+  border: #dadada solid 10px;
+  background-color: whitesmoke;
+}
+.droptext {
+  display: block;
+  cursor: pointer;
+  font-weight: 800;
+  margin-top: 10px;
+  padding: 16px;
+  background-color: #bdbdbd;
+}
+</style>

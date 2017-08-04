@@ -62,12 +62,15 @@
               </div>
             </p>
             <p></p>
-            <p><strong>ราคา</strong> {{ course.price }} <strong>บาท</strong> / {{ course.hourPerDay * course.studyTimes}} <strong>ชั่วโมง</strong></p>
+            <p><strong>ราคา</strong> {{ course.price }} <strong>บาท</strong> / {{ course.hourPerDay * course.totalDay}} <strong>ชั่วโมง</strong></p>
             <hr>
             <h2>รายละเอียด</h2>
             <p>{{ course.description }}</p>
             <p>
-              <div class="text-header">รอบเรียน</div> {{ course.startDate | formatDate }} - {{ course.endDate | formatDate }}</p>
+              <div class="text-header">วันที่เรียน</div> {{ course.startDate | formatDate }} - {{ course.endDate | formatDate }}</p>
+            <p>
+            <p>
+              <div class="text-header">เวลาเรียน</div> {{ course.startDate | formatTime }} - {{ course.endDate | formatTime }} ({{ course.hourPerDay }} ชั่วโมง/วัน)</p>
             <p>
               <div class="text-header">สถานที่</div>
               {{ course.address.line }}
@@ -77,7 +80,7 @@
             <p>
               <div class="text-header">เบอร์โทร</div> {{ course.phone }}</p>
             <p>
-              <div class="text-header">เว็บไซต์</div> {{ course.website }}</p>
+              <div class="text-header">เว็บไซต์</div> <a :href="course.website" target="_blank">{{ course.website }}</a></p>
           </div>
           <div class="course-info content">
             <h1>คอร์สที่คล้ายกัน</h1>
@@ -116,7 +119,7 @@ import ImageSlider from '../image/Slider.vue'
 import Star from '../Star.vue'
 import ReviewForm from '../review/Form.vue'
 import swal from 'sweetalert2'
-
+import dateFormat from 'dateformat'
 import { IMAGE_SERVER } from '@/config/'
 
 export default {
@@ -156,13 +159,17 @@ export default {
       this.course.reviews.forEach((review) => {
         total += review.rating
       })
-      return (total / this.course.reviews.length) || 0.0
+      return parseFloat((total / this.course.reviews.length).toFixed(1)) || 0
     }
   },
   filters: {
     formatDate (value) {
       const dateObj = new Date(value)
       return dateObj.toDateString()
+    },
+    formatTime (value) {
+      const date = new Date(value)
+      return dateFormat(date, 'HH:MM')
     }
   },
   async beforeMount () {

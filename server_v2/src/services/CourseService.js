@@ -1,6 +1,5 @@
 const models = require('../models')
 const Course = models.Course
-const Institute = models.Institute
 const Level = models.Levels
 
 // .with('username', 'birthyear').without('password', 'access_token');
@@ -10,12 +9,7 @@ const getAll = () => {
 }
 
 const findOne = (id, select = '') => {
-  return Course.findOne({ '_id': id }).populate('institute').populate({
-    path: 'reviews',
-    populate: {
-      path: 'userId'
-    }
-  }).populate('level').select(select).exec()
+  return Course.findOne({ '_id': id }).populate('level').select(select).exec()
 }
 
 const getReview = (id) => {
@@ -34,17 +28,17 @@ const search = async ({ page = 0, limit = 10, sort = { 'createdAt': -1 }, filter
   limit = parseInt(limit) || 10
   // console.log(filters)
   try {
-    if (filters.institute) {
-      const institute_ = await Institute.find({ name: { $in: filters.institute } }).select('_id')
-      const insList = institute_.map((ins) => {
-        return ins._id
-      })
+    // if (filters.institute) {
+    //   const institute_ = await Institute.find({ name: { $in: filters.institute } }).select('_id')
+    //   const insList = institute_.map((ins) => {
+    //     return ins._id
+    //   })
 
-      filters.$and.push({ institute: { $in: insList } })
-      delete filters.institute
-    }
+    //   filters.$and.push({ institute: { $in: insList } })
+    //   delete filters.institute
+    // }
     const courses = await Course.find(filters)
-      .populate('institute')
+      // .populate('institute')
       .populate('level')
       .skip(page * limit)
       .limit(limit)
@@ -66,10 +60,10 @@ const searchHelp = async () => {
   try {
     const levels = await Level.find({disabled: false}).select('_id name')
 
-    const institute = await Institute.find({}, '-_id').select('name')
-    const institutes = institute.map((ins) => {
-      return ins.name
-    })
+    const institutes = await Course.find().distinct('institute').exec()
+    // const institutes = institute.map((ins) => {
+    //   return ins.name
+    // })
 
     return {
       levels,

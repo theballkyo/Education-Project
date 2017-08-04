@@ -1,12 +1,11 @@
 const Router = require('koa-router')
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
 const pathUtils = require('../../../utils/pathUtils')
-const helpers = require('../../../common/helpers')
 const CourseService = require('../../../services/CourseService')
 const LevelService = require('../../../services/LevelService')
-const Hashids = require('hashids')
-const hashids = new Hashids()
+const ReportService = require('../../../services/ReportService')
+const hashids = require('../../../utils/hashIds')
 const course = new Router()
 
 /**
@@ -31,7 +30,7 @@ course.get('/', async (ctx, next) => {
 
   // Set institute
   if (req.institute) {
-    filters['institute'] = req.institute.split(',')
+    filterAndGroup.push({ institute: { $in: req.institute.split(',') } })
   }
 
   // Set price
@@ -56,7 +55,7 @@ course.get('/', async (ctx, next) => {
 
   let select = 'name subject level institute promotionPrice price studyHour totalDay hourPerDay coverImage'
 
-  const courses = await CourseService.search({page, limit, sort, filters, select})
+  const courses = await CourseService.search({ page, limit, sort, filters, select })
   ctx.body = courses
 })
 
@@ -78,7 +77,7 @@ course.get('/user/list', async ctx => {
   }
   let select = 'name subject level createdAt updatedAt'
 
-  const courses = await CourseService.search({page, limit, sort, filters, select})
+  const courses = await CourseService.search({ page, limit, sort, filters, select })
   ctx.body = courses
 })
 
@@ -86,8 +85,11 @@ course.get('/user/list', async ctx => {
  * Get a course information by course ID
  */
 course.get('/:id/edit', async (ctx, next) => {
+  if (!ctx.state.user) {
+    ctx.throw('Access Denied', 401)
+  }
   const id = ctx.params.id
-  const select = 'name subject level description teacher price promotionPrice email phone website address startDate endDate hourPerDay totalDay coverImage images tags dayOfWeek'
+  const select = 'name institute subject level description teacher price promotionPrice email phone website address startDate endDate hourPerDay totalDay coverImage images tags dayOfWeek'
   const course = await CourseService.findOne(id, select)
   ctx.body = course
 })
@@ -129,6 +131,7 @@ course.post('/:id/review', async (ctx) => {
     name: ctx.request.body.name,
     email: ctx.request.body.email,
     message: ctx.request.body.message,
+    ip: ctx.request.ip,
     rating: parseInt(ctx.request.body.rating)
   }
 
@@ -142,6 +145,28 @@ course.post('/:id/review', async (ctx) => {
   ctx.body = {
     message: 'Added review'
   }
+})
+
+/**
+ * Add report review
+ */
+course.post('/review/report', async (ctx) => {
+  const id = ctx.request.body.reviewId
+  let course = await CourseService.findOne(id)
+  if (course == null) {
+    ctx.body = { error: true, message: 'course not found' }
+    return
+  }
+  const data = {
+    name: ctx.request.body.name,
+    email: ctx.request.body.email,
+    message: ctx.request.body.message,
+    ip: ctx.request.ip,
+    reason: ctx.request.body.reason,
+    reviewId: id
+  }
+  ReportService.reviewReport(data)
+  ctx.body = { message: 'report send'}
 })
 
 /**
@@ -164,6 +189,7 @@ course.post('/', async (ctx) => {
   }
 
   const fields = ctx.request.body.fields
+  const files = ctx.request.body.files
   let course = JSON.parse(fields.course)
   course.createBy = ctx.state.user.id
 
@@ -173,35 +199,30 @@ course.post('/', async (ctx) => {
   // Save a course
   course = await CourseService.save(course)
 
-  const files = ctx.request.body.files
   let slideImage = []
-
+  console.log(files)
   if (files.cover) {
-    const filename = hashids.encodeHex(course._id) + 'cover.' + files.cover.name.split('.').pop()
+    const filename = course._id + 'cover.' + files.cover.name.split('.').pop()
     fs.renameSync(files.cover.path, path.join(pathUtils.getRoot(), 'public', 'images', filename))
     course.coverImage = filename
   }
-  if (files.slide1) {
-    const filename = hashids.encodeHex(course._id) + '1.' + files.slide1.name.split('.').pop()
-    fs.renameSync(files.slide1.path, path.join(pathUtils.getRoot(), 'public', 'images', filename))
-    slideImage.push(filename)
-  }
-  if (files.slide2) {
-    const filename = hashids.encodeHex(course._id) + '2.' + files.slide1.name.split('.').pop()
-    fs.renameSync(files.slide2.path, path.join(pathUtils.getRoot(), 'public', 'images',filename))
-    slideImage.push(filename)
-  }
-  if (files.slide3) {
-    const filename = hashids.encodeHex(course._id) + '3.' + files.slide1.name.split('.').pop()
-    fs.renameSync(files.slide3.path, path.join(pathUtils.getRoot(), 'public', 'images', filename))
-    slideImage.push(filename)
-  }
-  if (files.slide4) {
-    const filename = hashids.encodeHex(course._id) + '4.' + files.slide1.name.split('.').pop()
-    fs.renameSync(files.slide4.path, path.join(pathUtils.getRoot(), 'public', 'images', filename))
-    slideImage.push(filename)
-  }
 
+  if (files.imageSlide && files.imageSlide.length > 0) {
+    for (const image of files.imageSlide) {
+      const date = new Date()
+      const hash = await hashids.encode(date.getTime())
+      const filename = course._id + `.slide.${hash}.` + image.name.split('.').pop()
+      const newPath = path.join(pathUtils.getRoot(), 'public', 'images', filename)
+      try {
+        await fs.move(image.path, newPath)
+        slideImage.push(filename)
+        console.log(slideImage)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
+  // console.log(slideImage)
   course.images = slideImage
   // Update course
   await CourseService.save(course)
@@ -220,7 +241,12 @@ course.put('/:id', async (ctx) => {
 
   let course = await CourseService.findOne(ctx.params.id)
 
+  if (course.createBy !== ctx.state.user.id) {
+    ctx.throw('Access Denied', 401)
+  }
+
   course.name = newCourse.name
+  course.institute = newCourse.institute
   course.subject = newCourse.subject
   course.level = newCourse.level
   course.description = newCourse.description
@@ -238,45 +264,60 @@ course.put('/:id', async (ctx) => {
   course.dayOfWeek = newCourse.dayOfWeek
   course.tags = newCourse.tags
 
-  // Dummy institute
-  // course.institute = '590cafb108873a5004dd9576'
-
-  // Save a course
-  // course = await CourseService.save(course)
-
-  /**
-   * Todo Images edit
-   */
   const files = ctx.request.body.files
   let slideImage = []
 
   if (files.cover) {
-    const filename = hashids.encodeHex(course._id) + 'cover.' + files.cover.name.split('.').pop()
+    console.log('cover')
+    console.log(files.cover)
+    const filename = course._id + '.cover.' + files.cover.name.split('.').pop()
     fs.renameSync(files.cover.path, path.join(pathUtils.getRoot(), 'public', 'images', filename))
     course.coverImage = filename
   }
-  if (files.slide1) {
-    const filename = hashids.encodeHex(course._id) + '1.' + files.slide1.name.split('.').pop()
-    fs.renameSync(files.slide1.path, path.join(pathUtils.getRoot(), 'public', 'images', filename))
-    slideImage.push(filename)
-  }
-  if (files.slide2) {
-    const filename = hashids.encodeHex(course._id) + '2.' + files.slide1.name.split('.').pop()
-    fs.renameSync(files.slide2.path, path.join(pathUtils.getRoot(), 'public', 'images',filename))
-    slideImage.push(filename)
-  }
-  if (files.slide3) {
-    const filename = hashids.encodeHex(course._id) + '3.' + files.slide1.name.split('.').pop()
-    fs.renameSync(files.slide3.path, path.join(pathUtils.getRoot(), 'public', 'images', filename))
-    slideImage.push(filename)
-  }
-  if (files.slide4) {
-    const filename = hashids.encodeHex(course._id) + '4.' + files.slide1.name.split('.').pop()
-    fs.renameSync(files.slide4.path, path.join(pathUtils.getRoot(), 'public', 'images', filename))
-    slideImage.push(filename)
+
+  if (newCourse.imageSlide && newCourse.imageSlide.length > 0) {
+    let num = 0
+    for (let image of newCourse.imageSlide) {
+      if (image.isNew) {
+        let file = null
+        if (!Array.isArray(files.imageSlide)) {
+          file = files.imageSlide
+        } else {
+          file = files.imageSlide[num]
+        }
+
+        const date = new Date()
+        const hash = await hashids.encode(date.getTime())
+        const filename = course._id + `.slide.${hash}.` + file.name.split('.').pop()
+        const newPath = path.join(pathUtils.getRoot(), 'public', 'images', filename)
+        try {
+          await fs.move(file.path, newPath)
+          slideImage.push(filename)
+        } catch (e) {
+          console.log(e)
+        }
+        num++
+      } else {
+        slideImage.push(image.name)
+      }
+    }
   }
 
-  course.images = slideImage
+  if (slideImage.length >= 1) {
+    for (const image of course.images) {
+      // Remove image is not use
+      if (slideImage.indexOf(image) < 0) {
+        const path_ = path.join(pathUtils.getRoot(), 'public', 'images', image)
+        try {
+          await fs.remove(path_)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
+    course.images = slideImage
+  }
+
   // Update course
   await CourseService.save(course)
   ctx.body = { message: 'Edit a course' }

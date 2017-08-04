@@ -9,45 +9,35 @@ const JoiSchema = Joi.object().keys({
   detail: Joi.string()
 })
 
-const LevelSchema = new mongoose.Schema({
-  code: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  disabled: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  detail: {
-    type: String
-  }
-})
+const getSchema = (autoIncrement, tree) => {
+  const LevelSchema = new mongoose.Schema({
+    code: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    disabled: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    detail: {
+      type: String
+    }
+  })
 
-// Set Auto increment ID for levels
-// LevelSchema.pre('save', async function (next) {
-//   const doc = this
-//   await Counters.findByIdAndUpdate({
-//     _id: 'levelsId'
-//   }, {
-//     $inc: { seq: 1 }
-//   }, (error, counter) => {
-//     if (error) {
-//       return next(error)
-//     }
-//     doc._id = counter.seq
-//     next()
-//   })
-// })
+  LevelSchema.plugin(autoIncrement.plugin, 'Levels')
+  LevelSchema.plugin(tree, {
+    idType: mongoose.Schema.Types.Number
+  })
 
-// LevelSchema.plugin(AutoIncrement, {inc_field: 'id'})
-// LevelSchema.plugin(AutoIncrement.get().plugin, 'Levels')
+  return LevelSchema
+}
 
 module.exports = {
   JoiSchema,
-  LevelSchema
+  getSchema
 }

@@ -10,7 +10,7 @@
       </div>
       <div class="media-content">
         <p class="title is-4">{{ course.name }}</p>
-        <p class="subtitle is-6">{{ course.institute.name }}</p>
+        <p class="subtitle is-6">{{ course.institute }}</p>
       </div>
     </div>
 
@@ -46,7 +46,7 @@ export default {
       type: Object,
       default: {
         _id: '1',
-        institute: [{name: 'Unknown'}],
+        institute: '',
         subject: 'Unknown',
         promotionPrice: 0,
         hour: 2

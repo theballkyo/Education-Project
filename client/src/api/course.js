@@ -59,6 +59,13 @@ const getReview = id => {
 }
 
 /**
+ * Report review
+ */
+const reportReview = data => {
+  return http.post(API_ROOT + `course/review/report`, data)
+}
+
+/**
  * Get all levels in course
  */
 const searchHelper = () => {
@@ -89,5 +96,6 @@ export default {
   addReview,
   getReview,
   getLevel,
-  getUserCourse
+  getUserCourse,
+  reportReview
 }

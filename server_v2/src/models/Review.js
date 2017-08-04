@@ -1,26 +1,19 @@
 const mongoose = require('../datasource').getMongoose()
 const timestamps = require('mongoose-timestamp')
 
-const Schema = mongoose.Schema
-
 const ReviewSchema = new mongoose.Schema({
-  userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
-  courseId: { type: Schema.Types.ObjectId, ref: 'Course' },
-  comment: { type: String, require: true },
-  rating: { type: Number }
+  name: String,
+  email: String,
+  message: String,
+  ip: String,
+  rating: {
+    type: Number,
+    get: v => Math.round(v),
+    set: v => Math.round(v)
+  }
 })
 
 ReviewSchema.plugin(timestamps)
-
-// if (!ReviewSchema.options.toObject) {
-//     ReviewSchema.options.toObject = {};
-// }
-
-// ReviewSchema.options.toObject.transform = function (doc, ret) { // eslint-disable-line no-unused-vars
-//     const sanitized = _.omit(ret, '__v', '_id', 'createdAt', 'updatedAt');
-//     sanitized.id = doc._id;
-//     return sanitized;
-// };
 
 module.exports = {
   ReviewSchema

@@ -21,9 +21,13 @@ export default {
       let formData = new FormData()
       formData.append('course', JSON.stringify(course))
       // Add images if exist
-      Object.entries(images).forEach(([key, value]) => {
-        formData.append(key, value[0])
-      })
+      if (images.slide.length > 0) {
+        images.slide.forEach(image => {
+          if (image.isNew) {
+            formData.append('imageSlide', image.file)
+          }
+        })
+      }
       try {
         let res_ = await api.course.save(formData)
         if (res_.ok && res_.status === 200) {

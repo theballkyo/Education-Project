@@ -131,7 +131,7 @@ export default {
       if (this.filters.institute) {
         info.push(`สถาบัน ${this.filters.institute}`)
       }
-      info.push(`ราคา ${this.filters.priceMin} - ${this.filters.priceMax} บาท`)
+      info.push(`ราคา ${this.filters.priceMin || 0} - ${this.filters.priceMax || 10000} บาท`)
       return info
     }
   },
